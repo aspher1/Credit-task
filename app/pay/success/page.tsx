@@ -62,7 +62,7 @@ export default async function PaySuccessPage({
 
   return (
     <SiteShell width="landing">
-      <div className="max-w-2xl py-14 sm:py-16">
+      <div className="mx-auto max-w-2xl px-5 py-12 sm:px-8 sm:py-16">
       <h1 className="font-display text-4xl tracking-tight text-foreground">
         Payment step complete
       </h1>

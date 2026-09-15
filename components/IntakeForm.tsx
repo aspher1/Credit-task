@@ -117,7 +117,7 @@ export function IntakeForm({
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Ask target" required help={intakeHelp.askTarget}>
             <select
-              className="flex h-10 w-full rounded-sm border border-input bg-card px-3 text-sm text-foreground"
+              className="flex h-10 w-full rounded-md border border-input bg-white px-3 text-sm text-foreground"
               value={role}
               onChange={(event) => setRole(event.target.value as AskTargetRole)}
             >
