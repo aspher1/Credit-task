@@ -68,6 +68,14 @@ echo "==> Job after triage/draft"
 curl -sf "$BASE/api/jobs/$JOB_ID"
 echo
 
+echo "==> PDF must stay locked until approve"
+LOCKED="$(curl -sf "$BASE/jobs/$JOB_ID/pdf")"
+if echo "$LOCKED" | grep -q "Sam Buyer"; then
+  echo "PDF unlocked before approve"
+  exit 1
+fi
+echo "$LOCKED" | grep -q "not ready to print"
+
 echo "==> Approve (demo helper; UI path is /admin then /jobs/$JOB_ID/approve)"
 curl -sf -X POST "$BASE/api/demo/advance" \
   -H "Content-Type: application/json" \

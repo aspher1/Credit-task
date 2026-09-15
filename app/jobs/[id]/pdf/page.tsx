@@ -19,7 +19,8 @@ export default async function PdfPage({
   if (!job) notFound();
   const letter = job.letterFinal || job.letterDraft;
   const approved = job.status === "approved" || job.status === "delivered";
-  const unlocked = !!letter && job.paid && job.status !== "rejected";
+  const unlocked =
+    !!letter && job.paid && (job.status === "approved" || job.status === "delivered");
 
   if (!unlocked) {
     return (

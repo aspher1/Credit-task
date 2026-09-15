@@ -27,7 +27,8 @@ export default async function JobPage({
   const letter = job.letterFinal || job.letterDraft;
   const ready = job.status === "draft_ready" || job.status === "approved" || job.status === "delivered";
   const approved = job.status === "approved" || job.status === "delivered";
-  const canOpenPdf = !!letter && job.paid;
+  const canOpenPdf =
+    !!letter && job.paid && (job.status === "approved" || job.status === "delivered");
 
   return (
     <SiteShell>
@@ -65,11 +66,11 @@ export default async function JobPage({
             <Button asChild>
               <Link href={`/jobs/${job.id}/pdf`}>Open printable letter</Link>
             </Button>
-          ) : (
+          ) : !job.paid ? (
             <Button asChild>
               <Link href="/pay">{product.cta}</Link>
             </Button>
-          )}
+          ) : null}
         </div>
       </div>
 
