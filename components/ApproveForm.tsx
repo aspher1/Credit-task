@@ -72,7 +72,7 @@ export function ApproveForm({
           <AlertDescription>{error}</AlertDescription>
         </Alert>
       ) : null}
-      <label className="flex items-start gap-2 text-sm text-stone-800">
+      <label className="flex items-start gap-2 text-sm text-foreground">
         <input
           type="checkbox"
           className="mt-1"

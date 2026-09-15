@@ -25,7 +25,7 @@ function SheetContent({
 }) {
   return (
     <DialogPrimitive.Portal>
-      <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/40" />
+      <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-black/70" />
       <DialogPrimitive.Content
         data-slot="sheet-content"
         className={cn(
@@ -36,7 +36,7 @@ function SheetContent({
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="absolute top-4 right-4 text-stone-500 hover:text-stone-800">
+        <DialogPrimitive.Close className="absolute top-4 right-4 text-muted-foreground hover:text-foreground">
           <X className="size-4" />
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>

@@ -21,7 +21,7 @@ export default async function IntakePage({
 
   return (
     <SiteShell width="intake">
-      <h1 className="text-3xl font-semibold tracking-tight text-stone-900">
+      <h1 className="font-display text-4xl tracking-tight text-foreground">
         Inspection intake
       </h1>
       <p className="mt-2 text-sm text-muted-foreground">{shortCompliance}</p>

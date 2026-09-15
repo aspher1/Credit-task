@@ -19,7 +19,7 @@ export default async function AdminLoginPage({
 
   return (
     <SiteShell width="intake">
-      <h1 className="text-3xl font-semibold tracking-tight text-stone-900">Admin sign in</h1>
+      <h1 className="font-display text-4xl tracking-tight text-foreground">Admin sign in</h1>
       <p className="mt-2 text-sm text-muted-foreground">
         Credentials stub for the human approve path. Default local login is{" "}
         <code>{defaults.email}</code> / <code>{defaults.password}</code> unless you
@@ -28,7 +28,7 @@ export default async function AdminLoginPage({
       <div className="mt-6 space-y-4">
         <Disclaimer compact />
         {params.error ? (
-          <p className="rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-900">
+          <p className="rounded-sm border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
             Sign in failed. Check the admin email and password.
           </p>
         ) : null}

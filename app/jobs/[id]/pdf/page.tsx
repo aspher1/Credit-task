@@ -27,10 +27,10 @@ export default async function PdfPage({
   if (!unlocked) {
     return (
       <div className="mx-auto max-w-lg px-4 py-16 md:max-w-2xl">
-        <h1 className="text-3xl font-semibold tracking-tight text-stone-900">
+        <h1 className="font-display text-3xl tracking-tight text-foreground sm:text-4xl">
           {paywall.headline}
         </h1>
-        <p className="mt-3 text-stone-600">
+        <p className="mt-3 text-muted-foreground">
           {job.paid
             ? "This letter is not ready to print yet."
             : paywall.body}
@@ -60,7 +60,7 @@ export default async function PdfPage({
           <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
             US Letter · 1 in margins · Georgia / Times
           </p>
-          <h1 className="text-2xl font-semibold text-stone-900">{job.address}</h1>
+          <h1 className="font-display text-2xl text-foreground">{job.address}</h1>
         </div>
         <div className="flex gap-2">
           <PrintButton />

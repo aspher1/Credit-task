@@ -61,11 +61,12 @@ export default async function PaySuccessPage({
   const intakeHref = paymentId ? `/intake?paymentId=${encodeURIComponent(paymentId)}` : "/intake";
 
   return (
-    <SiteShell width="intake">
-      <h1 className="text-3xl font-semibold tracking-tight text-stone-900">
+    <SiteShell width="landing">
+      <div className="max-w-2xl py-14 sm:py-16">
+      <h1 className="font-display text-4xl tracking-tight text-foreground">
         Payment step complete
       </h1>
-      <p className="mt-4 text-stone-600">{detail}</p>
+      <p className="mt-4 text-muted-foreground">{detail}</p>
       <div className="mt-6 space-y-4">
         <Disclaimer />
         <div className="flex flex-wrap gap-3">
@@ -79,6 +80,7 @@ export default async function PaySuccessPage({
         <p className="text-sm text-muted-foreground">
           Status: {paid ? "paid (test/demo)" : "unpaid"}
         </p>
+      </div>
       </div>
     </SiteShell>
   );

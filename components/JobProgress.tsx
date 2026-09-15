@@ -10,11 +10,11 @@ export function JobProgress({ status }: { status: JobStatus }) {
   return (
     <div className="space-y-3">
       <Progress value={value} />
-      <ol className="flex justify-between text-xs font-medium text-stone-500">
+      <ol className="flex justify-between text-xs font-medium text-muted-foreground">
         {pipelineSteps.map((step, i) => (
           <li
             key={step.key}
-            className={i <= index ? "text-stone-900" : undefined}
+            className={i <= index ? "text-foreground" : undefined}
           >
             {step.label}
           </li>

@@ -1,16 +1,24 @@
-import Link from "next/link";
-import { legalDisclaimer } from "@/lib/copy";
+import { legalDisclaimer, product } from "@/lib/copy";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border">
-      <div className="mx-auto max-w-3xl px-4 py-8 text-sm text-muted-foreground">
-        <p className="font-medium text-stone-800">CreditAsk</p>
-        <p className="mt-2 max-w-2xl leading-relaxed">{legalDisclaimer.body}</p>
-        <p className="mt-4">
-          <Link className="underline-offset-4 hover:underline" href="/admin/login">
-            Admin
-          </Link>
+    <footer className="relative z-10 mt-auto border-t border-white/8">
+      <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+        <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p className="text-[0.7rem] font-medium tracking-[0.38em] text-foreground uppercase">
+              CreditAsk
+            </p>
+            <p className="mt-2 text-xs tracking-[0.14em] text-muted-foreground uppercase">
+              {product.tagline}
+            </p>
+          </div>
+          <p className="max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-[0.9375rem] sm:leading-7">
+            {legalDisclaimer.body}
+          </p>
+        </div>
+        <p className="mt-10 border-t border-white/8 pt-6 text-xs text-muted-foreground">
+          {legalDisclaimer.title}
         </p>
       </div>
     </footer>

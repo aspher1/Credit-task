@@ -93,9 +93,9 @@ export function IntakeForm({
     <form onSubmit={onSubmit} className="space-y-6">
       <div className="space-y-3">
         <Progress value={progress} />
-        <ol className="flex justify-between text-xs font-medium text-stone-500">
+        <ol className="flex justify-between text-xs font-medium text-muted-foreground">
           {intakeSteps.map((item, index) => (
-            <li key={item.key} className={index <= step ? "text-stone-900" : undefined}>
+            <li key={item.key} className={index <= step ? "text-foreground" : undefined}>
               {item.label}
             </li>
           ))}
@@ -117,7 +117,7 @@ export function IntakeForm({
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Ask target" required help={intakeHelp.askTarget}>
             <select
-              className="flex h-10 w-full rounded-md border border-input bg-white px-3 text-sm"
+              className="flex h-10 w-full rounded-sm border border-input bg-card px-3 text-sm text-foreground"
               value={role}
               onChange={(event) => setRole(event.target.value as AskTargetRole)}
             >
@@ -148,8 +148,8 @@ export function IntakeForm({
               onPdfFiles(event.dataTransfer.files);
             }}
             className={cn(
-              "flex cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-stone-300 bg-white px-4 py-10 text-center text-sm text-stone-600",
-              dragOver && "border-blue-700 bg-blue-50",
+              "flex cursor-pointer flex-col items-center justify-center rounded-sm border border-dashed border-white/16 bg-card px-4 py-10 text-center text-sm text-muted-foreground",
+              dragOver && "border-primary bg-primary/10",
             )}
           >
             <input
@@ -160,7 +160,7 @@ export function IntakeForm({
               onChange={(event) => onPdfFiles(event.target.files)}
             />
             <label htmlFor="pdf-drop" className="cursor-pointer">
-              <span className="font-medium text-stone-900">Drop PDF here or browse</span>
+              <span className="font-medium text-foreground">Drop PDF here or browse</span>
               <span className="mt-1 block">{pdfFile ? pdfFile.name : "PDF preferred"}</span>
             </label>
           </div>
@@ -193,8 +193,8 @@ export function IntakeForm({
                 className={cn(
                   "rounded-full border px-3 py-1.5 text-sm",
                   intent === value
-                    ? "border-blue-700 bg-blue-700 text-white"
-                    : "border-stone-300 bg-white text-stone-700 hover:bg-stone-100",
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-white/16 bg-transparent text-foreground/80 hover:border-primary/50 hover:bg-white/5",
                 )}
               >
                 {chipLabel(value)}
@@ -228,7 +228,7 @@ export function IntakeForm({
             </AlertDescription>
           </Alert>
         )}
-        <p className="text-sm text-stone-600">
+        <p className="text-sm text-muted-foreground">
           We’ll take this to <strong>Received → Drafting → Ready</strong>. Submit for
           drafting when the files and priorities look right.
         </p>
@@ -295,7 +295,7 @@ function Field({
     <div className="space-y-2">
       <Label>
         {label}
-        {required ? <span className="text-blue-700"> *</span> : null}
+        {required ? <span className="text-primary"> *</span> : null}
       </Label>
       {help ? <p className="text-sm text-muted-foreground">{help}</p> : null}
       {children}

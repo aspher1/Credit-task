@@ -55,11 +55,8 @@ export async function POST(request: Request) {
       });
       return NextResponse.json({ url, paymentId: created.id, mode: "checkout" });
     }
-  } catch (error) {
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Stripe checkout failed" },
-      { status: 400 },
-    );
+  } catch {
+    return NextResponse.json({ error: "Checkout is unavailable." }, { status: 400 });
   }
 
   try {
@@ -68,21 +65,14 @@ export async function POST(request: Request) {
       return NextResponse.json({
         url: paymentLink,
         mode: "payment_link",
-        note: "Using STRIPE_PAYMENT_LINK_URL. Set the link’s after-payment redirect to /pay/success?session_id={CHECKOUT_SESSION_ID}.",
       });
     }
-  } catch (error) {
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Payment Link config error" },
-      { status: 400 },
-    );
+  } catch {
+    return NextResponse.json({ error: "Checkout is unavailable." }, { status: 400 });
   }
 
   return NextResponse.json(
-    {
-      error:
-        "No Stripe test key or Payment Link is configured. Use demo checkout or set STRIPE_SECRET_KEY / STRIPE_PAYMENT_LINK_URL.",
-    },
+    { error: "Checkout is unavailable." },
     { status: 400 },
   );
 }

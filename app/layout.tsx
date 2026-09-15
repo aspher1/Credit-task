@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Newsreader } from "next/font/google";
 import "./globals.css";
 import { product } from "@/lib/copy";
 
 const sans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+
+const serif = Newsreader({
+  variable: "--font-newsreader",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -20,8 +26,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="light" style={{ colorScheme: "light" }}>
-      <body className={`${sans.variable} bg-background text-foreground antialiased`}>
+    <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
+      <body
+        className={`${sans.variable} ${serif.variable} bg-background text-foreground antialiased`}
+      >
         {children}
       </body>
     </html>

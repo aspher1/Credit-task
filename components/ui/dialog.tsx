@@ -28,7 +28,7 @@ function DialogOverlay({
   return (
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
-      className={cn("fixed inset-0 z-50 bg-black/40", className)}
+      className={cn("fixed inset-0 z-50 bg-black/70", className)}
       {...props}
     />
   );
@@ -51,7 +51,7 @@ function DialogContent({
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="absolute top-4 right-4 rounded-sm text-stone-500 hover:text-stone-800">
+        <DialogPrimitive.Close className="absolute top-4 right-4 rounded-sm text-muted-foreground hover:text-foreground">
           <X className="size-4" />
           <span className="sr-only">Close</span>
         </DialogPrimitive.Close>

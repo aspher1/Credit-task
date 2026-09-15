@@ -28,12 +28,12 @@ export default async function ApprovePage({
         Human approve packet
       </p>
       <div className="mt-2 flex flex-wrap items-center gap-3">
-        <h1 className="text-3xl font-semibold tracking-tight text-stone-900">
+        <h1 className="font-display text-3xl tracking-tight text-foreground sm:text-4xl">
           Job {job.id}
         </h1>
         <StatusBadge status={job.status} />
       </div>
-      <p className="mt-2 text-stone-600">{job.address}</p>
+      <p className="mt-2 text-muted-foreground">{job.address}</p>
       <div className="mt-6">
         <JobProgress status={job.status} />
       </div>
@@ -102,7 +102,7 @@ export default async function ApprovePage({
       ) : null}
 
       <section className="mt-6">
-        <h2 className="text-xl font-semibold text-stone-900">Decision</h2>
+        <h2 className="font-display text-2xl text-foreground">Decision</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           Approve requires the not-legal-advice checkbox. One revise loop, then re-approve.
         </p>

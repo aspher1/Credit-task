@@ -35,7 +35,7 @@ export default async function JobPage({
   return (
     <SiteShell>
       {job.example ? (
-        <p className="mb-4 rounded-md border border-stone-200 bg-stone-100 px-3 py-2 text-sm text-stone-700">
+        <p className="mb-4 rounded-sm border border-border bg-secondary px-3 py-2 text-sm text-foreground/80">
           <strong>Example data</strong> — fake address and sample issues for the demo path.
         </p>
       ) : null}
@@ -44,7 +44,7 @@ export default async function JobPage({
           <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
             Job {job.id}
           </p>
-          <h1 className="mt-1 text-3xl font-semibold tracking-tight text-stone-900">
+          <h1 className="mt-1 font-display text-3xl tracking-tight text-foreground sm:text-4xl">
             {job.address}
           </h1>
           <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -81,7 +81,7 @@ export default async function JobPage({
       </div>
 
       {ready ? (
-        <p className="mt-4 text-sm text-stone-700">{product.successSend}</p>
+        <p className="mt-4 text-sm text-foreground/80">{product.successSend}</p>
       ) : null}
 
       <div className="mt-8">
@@ -142,7 +142,7 @@ export default async function JobPage({
       )}
 
       <section className="mt-8">
-        <h2 className="text-xl font-semibold text-stone-900">Letter draft</h2>
+        <h2 className="font-display text-2xl text-foreground">Letter draft</h2>
         <p className="mt-1 text-sm text-muted-foreground">{product.successSend}</p>
         <div className="mt-4 overflow-x-auto">
           {letter ? (
