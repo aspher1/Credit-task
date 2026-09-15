@@ -17,6 +17,7 @@ export function ApproveForm({
   const [notes, setNotes] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState<string | null>(null);
+  const [understood, setUnderstood] = useState(false);
 
   async function post(path: string, body: Record<string, string>) {
     setError(null);
@@ -62,10 +63,23 @@ export function ApproveForm({
       {error ? (
         <p className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-800">{error}</p>
       ) : null}
+      <label className="flex items-start gap-2 text-sm text-[var(--navy)]">
+        <input
+          type="checkbox"
+          className="mt-1"
+          checked={understood}
+          onChange={(event) => setUnderstood(event.target.checked)}
+          required
+        />
+        <span>
+          I understand this is not legal advice, and I’m responsible for sending this
+          letter and any follow-up.
+        </span>
+      </label>
       <div className="flex flex-wrap gap-3">
         <button
           className="btn-primary"
-          disabled={!!pending}
+          disabled={!!pending || !understood}
           type="button"
           onClick={() => post(`/api/jobs/${jobId}/approve`, { letter: draft })}
         >

@@ -55,10 +55,9 @@ Please confirm how you would like to resolve these items${deadlineBit}. I am pre
 
 Sincerely,
 ${job.buyerName}
-via CreditAsk
 
 ---
-*Draft only — not sent until human approve. PDF deliver gated on $79 payment (Stripe test Checkout / Payment Link). Not legal advice. CreditAsk does not negotiate with the seller.*`;
+Prepared with CreditAsk · Not legal advice · Draft for buyer review before sending`;
 }
 
 export function letterHtml(text: string): string {

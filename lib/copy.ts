@@ -12,9 +12,9 @@ export const product = {
 export const intakeHelp = {
   address:
     "Where the inspection was done. Use the full mailing address.",
-  pdf: "Upload the full report if you have it. PDF preferred.",
+  pdf: "Upload the full report if you have it. PDF preferred. Your inspection PDF is used only to draft your letter. Access is limited to drafting and human review. We don’t send it to the seller. We delete files 30 days after delivery unless you ask sooner.",
   photos:
-    "If you don’t have a PDF, upload clear photos of each issue (wide shot + close-up).",
+    "If you don’t have a PDF, upload clear photos of each issue (wide shot + close-up). Your inspection photos are used only to draft your letter. Access is limited to drafting and human review. We don’t send them to the seller. We delete files 30 days after delivery unless you ask sooner.",
   askTarget:
     "Who should receive this letter? Seller, listing agent, landlord, or other (include their name).",
   askIntent:

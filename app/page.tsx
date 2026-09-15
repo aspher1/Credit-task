@@ -12,7 +12,7 @@ export default function HomePage() {
             {product.price} · {product.sla} marketing SLA
           </p>
           <h1 className="mt-3 font-serif text-4xl leading-tight text-[var(--navy)] sm:text-5xl">
-            A ready-to-send inspection credit letter — without pretending we are your lawyer.
+            Turn your inspection into a clear credit request.
           </h1>
           <p className="mt-5 max-w-xl text-lg text-[var(--muted)]">
             Upload a home inspection PDF or photos, tell us what you want to ask
@@ -21,7 +21,7 @@ export default function HomePage() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link className="btn-primary" href="/pay">
-              Pay {product.price} and start
+              Get your letter — $79
             </Link>
             <Link className="btn-secondary" href="/intake">
               Go to intake
