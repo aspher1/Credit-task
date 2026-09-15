@@ -178,4 +178,5 @@ npm run build    # production build
 npm start        # next start
 npm run demo     # end-to-end stub demo against APP_URL (default localhost:3000)
 npm run lint
+npm test         # data-root: cwd/data locally, /tmp/creditask on Vercel
 ```
