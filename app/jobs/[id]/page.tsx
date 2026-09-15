@@ -27,7 +27,7 @@ export default async function JobPage({
   const letter = job.letterFinal || job.letterDraft;
   const ready = job.status === "draft_ready" || job.status === "approved" || job.status === "delivered";
   const approved = job.status === "approved" || job.status === "delivered";
-  const canOpenPdf = !!letter && (job.paid || approved);
+  const canOpenPdf = !!letter && job.paid;
 
   return (
     <SiteShell>

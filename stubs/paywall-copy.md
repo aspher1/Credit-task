@@ -2,8 +2,10 @@
 
 **Headline:** Unlock your inspection ask letter (PDF)
 
-**Body:** After you approve the draft, pay **$79** once to download the final PDF. Secure checkout via Stripe.
+**Body:** Pay **$79** to unlock PDF deliver. Stripe test checkout. A human still approves the draft before you send it.
 
-**CTA:** Pay $79 — get PDF
+**CTA:** Get your letter — $79
 
-**Fine print:** Test mode until live charges are approved. No letter is sent to the other party unless you choose to send it yourself.
+**One-liner:** Not legal advice. We draft a letter you review and send — we don’t negotiate with sellers.
+
+**Fine print:** Test mode until live charges are approved.

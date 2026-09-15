@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { Disclaimer } from "@/components/Disclaimer";
 import { IntakeForm } from "@/components/IntakeForm";
 import { SiteShell } from "@/components/SiteShell";
 import { shortCompliance } from "@/lib/copy";
@@ -24,6 +25,9 @@ export default async function IntakePage({
         Inspection intake
       </h1>
       <p className="mt-2 text-sm text-muted-foreground">{shortCompliance}</p>
+      <div className="mt-6">
+        <Disclaimer />
+      </div>
       <div className="mt-8">
         <IntakeForm paymentId={payment?.id} paid={paid} />
       </div>

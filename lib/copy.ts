@@ -47,7 +47,7 @@ export const intakeHelp = {
 
 export const paywall = {
   headline: "Unlock your inspection ask letter (PDF)",
-  body: `After you approve the draft, pay ${PRICE_LABEL} once to download the final PDF. Secure checkout via Stripe.`,
+  body: `Pay ${PRICE_LABEL} to unlock PDF deliver. Stripe test checkout. A human still approves the draft before you send it.`,
   cta: "Get your letter — $79",
   finePrint:
     "Not legal advice. We draft a letter you review and send — we don’t negotiate with sellers. Test mode until live charges are approved.",
@@ -71,8 +71,8 @@ export const featureCards = [
 export const howItWorks = [
   {
     n: "1",
-    title: "Pay $79",
-    body: "One price. Stripe test checkout, or stub checkout for the demo.",
+    title: "Get your letter — $79",
+    body: "Pay once. Payment unlocks PDF deliver (Stripe test mode).",
   },
   {
     n: "2",

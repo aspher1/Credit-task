@@ -2,9 +2,7 @@
 
 **Property address** — Where the inspection was done. Use the full mailing address.
 
-**Inspection PDF** — Upload the full report if you have it. PDF preferred.
-
-**Photos** — If you don’t have a PDF, upload clear photos of each issue (wide shot + close-up).
+**Inspection PDF / photos** — Your inspection files are used only to draft your letter. We delete uploads within 30 days.
 
 **Ask target** — Who should receive this letter? Seller, listing agent, landlord, or other (include their name).
 

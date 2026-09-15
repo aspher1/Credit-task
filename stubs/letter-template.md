@@ -19,7 +19,7 @@ Please confirm how you would like to resolve these items[ by Deadline, if set]. 
 
 Sincerely,  
 [Buyer/client name]  
-via CreditAsk
+Prepared with CreditAsk
 
 ---
-*Draft only — not sent until human approve. PDF deliver gated on $79 payment (Stripe Payment Link).*
+Prepared with CreditAsk · Not legal advice · Draft for buyer review · We don’t negotiate or send for you
