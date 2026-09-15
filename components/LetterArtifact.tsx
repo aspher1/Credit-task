@@ -4,10 +4,14 @@ export function LetterArtifact() {
   return (
     <div className="relative mx-auto w-full max-w-[26rem] lg:max-w-none">
       <div
-        className="absolute -inset-x-6 top-10 h-[70%] bg-[radial-gradient(ellipse_at_center,rgba(232,214,176,0.28),transparent_68%)]"
+        className="absolute -inset-x-10 top-6 h-[78%] bg-[radial-gradient(ellipse_at_center,rgba(236,214,168,0.42),transparent_64%)]"
         aria-hidden
       />
-      <article className="letter-artifact relative aspect-[8.5/11] w-full p-8 sm:p-10">
+      <div
+        className="absolute top-[8%] right-[2%] left-[14%] h-[84%] rotate-3 border border-white/10 bg-[#161d2b]"
+        aria-hidden
+      />
+      <article className="letter-artifact relative aspect-[8.5/11] w-full -rotate-1 p-8 sm:p-10">
         <div className="flex items-center justify-between gap-4">
           <p className="text-[0.65rem] font-semibold tracking-[0.16em] text-stone-500 uppercase">
             {letterAttribution}

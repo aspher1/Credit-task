@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { intakeHelp, intakeSteps, product, shortCompliance, uploadPrivacy } from "@/lib/copy";
+import { intakeHelp, intakeSteps, product, uploadPrivacy } from "@/lib/copy";
 import {
   ASK_INTENTS,
   ASK_TARGET_ROLES,
@@ -107,7 +107,6 @@ export function IntakeForm({
       <input type="hidden" name="askTargetRole" value={role} />
 
       <div className={step === 0 ? "space-y-5" : "hidden"}>
-        <p className="text-sm text-muted-foreground">{shortCompliance}</p>
         <Field label="Property address" required help={intakeHelp.address}>
           <Input required name="address" placeholder="123 Main St, City, ST 00000" />
         </Field>

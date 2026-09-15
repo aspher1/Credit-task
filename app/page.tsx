@@ -78,7 +78,7 @@ export default function HomePage() {
                 key={card.title}
                 className="border-border py-10 md:border-l md:px-10 md:first:border-l-0 md:first:pl-0"
               >
-                <p className="display text-4xl text-muted-foreground/70">
+                <p className="display text-4xl text-foreground/40">
                   {String(index + 1).padStart(2, "0")}
                 </p>
                 <h3 className="mt-8 text-2xl font-semibold tracking-tight text-foreground">

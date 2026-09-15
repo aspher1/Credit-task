@@ -55,23 +55,13 @@ export function Header({ chrome = "paper" }: { chrome?: "paper" | "cinematic" })
             )}
             aria-hidden
           />
-          <span className="flex flex-col leading-none">
-            <span
-              className={cn(
-                "text-[0.9375rem] font-semibold tracking-tight",
-                cinematic ? "text-[var(--paper)]" : "text-foreground",
-              )}
-            >
-              CreditAsk
-            </span>
-            <span
-              className={cn(
-                "mt-1 hidden text-[0.65rem] tracking-[0.12em] uppercase sm:block",
-                cinematic ? "text-[var(--paper)]/45" : "text-muted-foreground",
-              )}
-            >
-              {product.tagline}
-            </span>
+          <span
+            className={cn(
+              "text-[0.9375rem] font-semibold tracking-tight",
+              cinematic ? "text-[var(--paper)]" : "text-foreground",
+            )}
+          >
+            CreditAsk
           </span>
         </Link>
         <nav className="hidden items-center gap-8 sm:flex">
