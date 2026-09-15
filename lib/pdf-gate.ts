@@ -7,11 +7,7 @@ import type { Job } from "@/lib/types";
 export function printablePdfUnlocked(
   job: Pick<Job, "paid" | "status">,
 ): boolean {
-  return (
-    job.paid &&
-    job.status !== "rejected" &&
-    (job.status === "approved" || job.status === "delivered")
-  );
+  return job.paid && (job.status === "approved" || job.status === "delivered");
 }
 
 export function letterIsUnapprovedDraft(

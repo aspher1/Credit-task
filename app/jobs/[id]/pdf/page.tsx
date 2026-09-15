@@ -5,7 +5,7 @@ import { LetterPreview } from "@/components/LetterPreview";
 import { PrintButton } from "@/components/PrintButton";
 import { Button } from "@/components/ui/button";
 import { paywall, product, shortCompliance } from "@/lib/copy";
-import { letterIsUnapprovedDraft, printablePdfUnlocked } from "@/lib/pdf-gate";
+import { letterIsUnapprovedDraft } from "@/lib/pdf-gate";
 import { getJob } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
@@ -19,7 +19,10 @@ export default async function PdfPage({
   const job = await getJob(id);
   if (!job) notFound();
   const letter = job.letterFinal || job.letterDraft;
-  const unlocked = !!letter && printablePdfUnlocked(job);
+  const unlocked =
+    !!letter &&
+    job.paid &&
+    (job.status === "approved" || job.status === "delivered");
 
   if (!unlocked) {
     return (

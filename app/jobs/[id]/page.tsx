@@ -9,7 +9,7 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { paywall, product } from "@/lib/copy";
-import { letterIsUnapprovedDraft, printablePdfUnlocked } from "@/lib/pdf-gate";
+import { letterIsUnapprovedDraft } from "@/lib/pdf-gate";
 import { getJob } from "@/lib/store";
 import { intentLabel, roleLabel } from "@/lib/types";
 
@@ -27,7 +27,10 @@ export default async function JobPage({
   const isAdmin = !!session?.user;
   const letter = job.letterFinal || job.letterDraft;
   const ready = job.status === "draft_ready" || job.status === "approved" || job.status === "delivered";
-  const canOpenPdf = !!letter && printablePdfUnlocked(job);
+  const canOpenPdf =
+    !!letter &&
+    job.paid &&
+    (job.status === "approved" || job.status === "delivered");
 
   return (
     <SiteShell>
