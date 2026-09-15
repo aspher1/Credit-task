@@ -1,7 +1,6 @@
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
-
-const UPLOAD_ROOT = path.join(process.cwd(), "data", "uploads");
+import { uploadsRoot } from "@/lib/data-root";
 
 const ALLOWED_PDF = new Set(["application/pdf"]);
 const ALLOWED_IMAGE = new Set([
@@ -15,7 +14,7 @@ const ALLOWED_IMAGE = new Set([
 export const MAX_FILE_BYTES = 20 * 1024 * 1024;
 
 export function uploadsDir(jobId: string): string {
-  return path.join(UPLOAD_ROOT, jobId);
+  return path.join(uploadsRoot(), jobId);
 }
 
 export function uploadPath(jobId: string, filename: string): string {

@@ -142,10 +142,12 @@ If no key is set (or the call fails), a conservative **stub** fills the same tem
 
 ## Data & uploads
 
-Runtime files (gitignored):
+Runtime files (gitignored locally):
 
 - `data/store.json` — jobs + payments
 - `data/uploads/[jobId]/` — inspection PDF/photos (not served from `/public`)
+
+On Vercel (`VERCEL=1`), the app filesystem is read-only, so the same files go under `/tmp/creditask` (ephemeral per instance; enough for MVP smoke).
 
 Admin can open attachments from the approve page (`/api/files/...`, session required).
 
@@ -176,4 +178,5 @@ npm run build    # production build
 npm start        # next start
 npm run demo     # end-to-end stub demo against APP_URL (default localhost:3000)
 npm run lint
+npm test         # data-root: cwd/data locally, /tmp/creditask on Vercel
 ```
