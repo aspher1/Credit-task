@@ -1,10 +1,7 @@
 import { mkdir, readFile, writeFile } from "fs/promises";
-import path from "path";
+import { dataRoot, storeFile } from "@/lib/data-root";
 import { seedExampleJob, seedExamplePayment, writeExamplePdf } from "@/lib/seed";
 import type { Job, PaymentRecord, StoreData } from "@/lib/types";
-
-const DATA_DIR = path.join(process.cwd(), "data");
-const STORE_FILE = path.join(DATA_DIR, "store.json");
 
 let queue: Promise<unknown> = Promise.resolve();
 
@@ -18,9 +15,9 @@ function withLock<T>(fn: () => Promise<T>): Promise<T> {
 }
 
 async function readStore(): Promise<StoreData> {
-  await mkdir(DATA_DIR, { recursive: true });
+  await mkdir(dataRoot(), { recursive: true });
   try {
-    const raw = await readFile(STORE_FILE, "utf8");
+    const raw = await readFile(storeFile(), "utf8");
     const parsed = JSON.parse(raw) as StoreData;
     return {
       jobs: Array.isArray(parsed.jobs) ? parsed.jobs : [],
@@ -31,15 +28,15 @@ async function readStore(): Promise<StoreData> {
       jobs: [seedExampleJob()],
       payments: [seedExamplePayment()],
     };
-    await writeFile(STORE_FILE, JSON.stringify(initial, null, 2));
+    await writeFile(storeFile(), JSON.stringify(initial, null, 2));
     await writeExamplePdf();
     return initial;
   }
 }
 
 async function writeStore(data: StoreData): Promise<void> {
-  await mkdir(DATA_DIR, { recursive: true });
-  await writeFile(STORE_FILE, JSON.stringify(data, null, 2));
+  await mkdir(dataRoot(), { recursive: true });
+  await writeFile(storeFile(), JSON.stringify(data, null, 2));
 }
 
 export async function getStore(): Promise<StoreData> {

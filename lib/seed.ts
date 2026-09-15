@@ -1,5 +1,6 @@
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
+import { uploadsDir } from "@/lib/files";
 import { fillLetter } from "@/lib/letter";
 import type { Job, PaymentRecord, Triage } from "@/lib/types";
 
@@ -98,7 +99,7 @@ export function seedExampleJob(): Job {
 }
 
 export async function writeExamplePdf(): Promise<void> {
-  const dir = path.join(process.cwd(), "data", "uploads", EXAMPLE_JOB_ID);
+  const dir = uploadsDir(EXAMPLE_JOB_ID);
   await mkdir(dir, { recursive: true });
   await writeFile(
     path.join(dir, "pdf_sample-inspection.pdf"),
