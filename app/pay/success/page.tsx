@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { Disclaimer } from "@/components/Disclaimer";
+import { Frame } from "@/components/Frame";
 import { SiteShell } from "@/components/SiteShell";
 import { Button } from "@/components/ui/button";
+import { shortCompliance } from "@/lib/copy";
 import {
   getPayment,
   getPaymentByStripeSession,
@@ -42,44 +44,42 @@ export default async function PaySuccessPage({
         paid = existing.status === "paid" || paid;
       }
       detail = paid
-        ? "Stripe test payment recorded. Upload your inspection next."
-        : "Stripe session found but not paid yet. You can still start intake; PDF stays locked.";
-    } catch (error) {
-      detail =
-        error instanceof Error
-          ? `Could not verify Stripe session: ${error.message}`
-          : "Could not verify Stripe session.";
+        ? "Payment recorded. Upload your inspection next."
+        : "Payment is not confirmed yet. You can still start intake; PDF stays locked.";
+    } catch {
+      detail = "Could not verify payment yet. You can still start intake; PDF stays locked.";
     }
   } else if (params.demo === "1" || paymentId) {
     const payment = paymentId ? await getPayment(paymentId) : null;
     paid = payment?.status === "paid";
     detail = paid
-      ? "Demo/test payment on file. Upload your inspection next."
+      ? "Payment on file. Upload your inspection next."
       : "No confirmed payment yet. You can start intake; PDF download stays gated.";
   }
 
   const intakeHref = paymentId ? `/intake?paymentId=${encodeURIComponent(paymentId)}` : "/intake";
 
   return (
-    <SiteShell width="intake">
-      <h1 className="text-3xl font-semibold tracking-tight text-stone-900">
-        Payment step complete
-      </h1>
-      <p className="mt-4 text-stone-600">{detail}</p>
-      <div className="mt-6 space-y-4">
-        <Disclaimer />
-        <div className="flex flex-wrap gap-3">
-          <Button asChild>
-            <Link href={intakeHref}>Continue to intake</Link>
-          </Button>
-          <Button variant="outline" asChild>
-            <Link href="/pay">Back to pay</Link>
-          </Button>
+    <SiteShell>
+      <Frame className="max-w-2xl py-14 sm:py-20">
+        <p className="kicker">{paid ? "Confirmed" : "Pending"}</p>
+        <h1 className="display mt-4 text-4xl text-foreground sm:text-5xl">
+          Payment step complete
+        </h1>
+        <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{detail}</p>
+        <p className="mt-4 text-[0.975rem] leading-relaxed text-foreground">{shortCompliance}</p>
+        <div className="mt-10 space-y-6">
+          <Disclaimer />
+          <div className="flex flex-wrap gap-3">
+            <Button size="lg" asChild>
+              <Link href={intakeHref}>Continue to intake</Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link href="/pay">Back to pay</Link>
+            </Button>
+          </div>
         </div>
-        <p className="text-sm text-muted-foreground">
-          Status: {paid ? "paid (test/demo)" : "unpaid"}
-        </p>
-      </div>
+      </Frame>
     </SiteShell>
   );
 }

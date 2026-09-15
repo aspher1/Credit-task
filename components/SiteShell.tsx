@@ -4,23 +4,20 @@ import { cn } from "@/lib/utils";
 
 export function SiteShell({
   children,
-  width = "default",
+  chrome = "paper",
 }: {
   children: React.ReactNode;
-  width?: "landing" | "intake" | "default";
-  admin?: boolean;
+  chrome?: "paper" | "cinematic";
 }) {
-  const max =
-    width === "landing"
-      ? "max-w-3xl"
-      : width === "intake"
-        ? "max-w-lg md:max-w-2xl"
-        : "max-w-3xl";
-
   return (
-    <div className="flex min-h-screen flex-col bg-background text-foreground">
-      <Header />
-      <main className={cn("mx-auto w-full flex-1 px-4 py-10", max)}>{children}</main>
+    <div
+      className={cn(
+        "flex min-h-screen flex-col text-foreground",
+        chrome === "cinematic" ? "bg-[var(--ink-deep)]" : "bg-background",
+      )}
+    >
+      <Header chrome={chrome} />
+      <main className="flex-1">{children}</main>
       <Footer />
     </div>
   );

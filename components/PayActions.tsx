@@ -3,66 +3,54 @@
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { paywall, product } from "@/lib/copy";
+import { paywall } from "@/lib/copy";
 
-export function PayActions({
-  hasStripe,
-  paymentLink,
-  allowDemo,
-}: {
-  hasStripe: boolean;
-  paymentLink: string | null;
-  allowDemo: boolean;
-}) {
+const UNAVAILABLE =
+  "Checkout is unavailable right now. Please try again shortly.";
+
+export function PayActions({ checkoutReady }: { checkoutReady: boolean }) {
   const [error, setError] = useState<string | null>(null);
-  const [pending, setPending] = useState<"stripe" | "demo" | null>(null);
+  const [pending, setPending] = useState(false);
 
-  async function start(mode: "stripe" | "demo") {
+  async function start() {
     setError(null);
-    setPending(mode);
+    setPending(true);
     try {
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mode }),
+        body: JSON.stringify({ mode: "stripe" }),
       });
-      const json = (await response.json()) as { url?: string; error?: string };
+      const json = (await response.json()) as { url?: string };
       if (!response.ok || !json.url) {
-        throw new Error(json.error || "Could not start checkout");
+        throw new Error(UNAVAILABLE);
       }
       window.location.href = json.url;
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Checkout failed");
-      setPending(null);
+    } catch {
+      setError(UNAVAILABLE);
+      setPending(false);
     }
+  }
+
+  if (!checkoutReady) {
+    return (
+      <p className="text-[0.9375rem] leading-relaxed text-muted-foreground">
+        {UNAVAILABLE}
+      </p>
+    );
   }
 
   return (
     <div className="space-y-3">
-      {hasStripe || paymentLink ? (
-        <Button disabled={!!pending} onClick={() => start("stripe")} type="button">
-          {pending === "stripe" ? "Redirecting to Stripe…" : paywall.cta}
-        </Button>
-      ) : (
-        <p className="text-sm text-muted-foreground">
-          Stripe test keys are not set. Use the demo checkout below, or add a test{" "}
-          <code>STRIPE_SECRET_KEY</code> (sk_test_) or{" "}
-          <code>STRIPE_PAYMENT_LINK_URL</code> (buy.stripe.com/test_…) in
-          <code> .env.local</code>. See README for creating and linking a Payment Link.
-        </p>
-      )}
-      {allowDemo ? (
-        <Button
-          variant="outline"
-          disabled={!!pending}
-          onClick={() => start("demo")}
-          type="button"
-        >
-          {pending === "demo"
-            ? "Starting demo payment…"
-            : `Continue in test/stub mode (${product.price} marked paid)`}
-        </Button>
-      ) : null}
+      <Button
+        size="lg"
+        className="w-full"
+        disabled={pending}
+        onClick={start}
+        type="button"
+      >
+        {pending ? "Redirecting…" : paywall.cta}
+      </Button>
       {error ? (
         <Alert variant="destructive">
           <AlertDescription>{error}</AlertDescription>

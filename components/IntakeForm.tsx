@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { intakeHelp, intakeSteps, product, shortCompliance, uploadPrivacy } from "@/lib/copy";
+import { intakeHelp, intakeSteps, product, uploadPrivacy } from "@/lib/copy";
 import {
   ASK_INTENTS,
   ASK_TARGET_ROLES,
@@ -93,9 +93,9 @@ export function IntakeForm({
     <form onSubmit={onSubmit} className="space-y-6">
       <div className="space-y-3">
         <Progress value={progress} />
-        <ol className="flex justify-between text-xs font-medium text-stone-500">
+        <ol className="flex justify-between text-[0.7rem] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
           {intakeSteps.map((item, index) => (
-            <li key={item.key} className={index <= step ? "text-stone-900" : undefined}>
+            <li key={item.key} className={index <= step ? "text-foreground" : undefined}>
               {item.label}
             </li>
           ))}
@@ -107,7 +107,6 @@ export function IntakeForm({
       <input type="hidden" name="askTargetRole" value={role} />
 
       <div className={step === 0 ? "space-y-5" : "hidden"}>
-        <p className="text-sm text-muted-foreground">{shortCompliance}</p>
         <Field label="Property address" required help={intakeHelp.address}>
           <Input required name="address" placeholder="123 Main St, City, ST 00000" />
         </Field>
@@ -117,7 +116,7 @@ export function IntakeForm({
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Ask target" required help={intakeHelp.askTarget}>
             <select
-              className="flex h-10 w-full rounded-md border border-input bg-white px-3 text-sm"
+              className="flex h-12 w-full rounded-sm border border-input bg-card px-3.5 text-sm"
               value={role}
               onChange={(event) => setRole(event.target.value as AskTargetRole)}
             >
@@ -148,8 +147,8 @@ export function IntakeForm({
               onPdfFiles(event.dataTransfer.files);
             }}
             className={cn(
-              "flex cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-stone-300 bg-white px-4 py-10 text-center text-sm text-stone-600",
-              dragOver && "border-blue-700 bg-blue-50",
+              "flex cursor-pointer flex-col items-center justify-center rounded-sm border border-dashed border-[var(--rule-strong)] bg-[var(--paper)] px-4 py-12 text-center text-sm text-muted-foreground",
+              dragOver && "border-foreground bg-[var(--paper-2)]",
             )}
           >
             <input
@@ -191,10 +190,10 @@ export function IntakeForm({
                 type="button"
                 onClick={() => setIntent(value)}
                 className={cn(
-                  "rounded-full border px-3 py-1.5 text-sm",
+                  "rounded-sm border px-3 py-2 text-sm",
                   intent === value
-                    ? "border-blue-700 bg-blue-700 text-white"
-                    : "border-stone-300 bg-white text-stone-700 hover:bg-stone-100",
+                    ? "border-foreground bg-primary text-primary-foreground"
+                    : "border-border bg-card text-foreground hover:bg-[var(--paper-2)]",
                 )}
               >
                 {chipLabel(value)}
@@ -295,7 +294,7 @@ function Field({
     <div className="space-y-2">
       <Label>
         {label}
-        {required ? <span className="text-blue-700"> *</span> : null}
+        {required ? <span className="text-foreground"> *</span> : null}
       </Label>
       {help ? <p className="text-sm text-muted-foreground">{help}</p> : null}
       {children}

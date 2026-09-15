@@ -1,18 +1,25 @@
-import Link from "next/link";
-import { legalDisclaimer } from "@/lib/copy";
+import { Frame } from "@/components/Frame";
+import { legalDisclaimer, product } from "@/lib/copy";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border">
-      <div className="mx-auto max-w-3xl px-4 py-8 text-sm text-muted-foreground">
-        <p className="font-medium text-stone-800">CreditAsk</p>
-        <p className="mt-2 max-w-2xl leading-relaxed">{legalDisclaimer.body}</p>
-        <p className="mt-4">
-          <Link className="underline-offset-4 hover:underline" href="/admin/login">
-            Admin
-          </Link>
+    <footer className="mt-auto border-t border-border bg-[var(--paper)]">
+      <Frame className="py-14 sm:py-16">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <p className="text-sm font-semibold tracking-tight text-foreground">CreditAsk</p>
+            <p className="mt-2 text-xs tracking-[0.16em] text-muted-foreground uppercase">
+              {product.tagline}
+            </p>
+          </div>
+          <p className="max-w-xl text-[0.9375rem] leading-7 text-muted-foreground">
+            {legalDisclaimer.body}
+          </p>
+        </div>
+        <p className="mt-12 border-t border-border pt-6 text-xs tracking-[0.14em] text-muted-foreground uppercase">
+          {legalDisclaimer.title}
         </p>
-      </div>
+      </Frame>
     </footer>
   );
 }

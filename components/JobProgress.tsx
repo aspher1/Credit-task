@@ -8,14 +8,11 @@ export function JobProgress({ status }: { status: JobStatus }) {
   const value = ((index + 1) / pipelineSteps.length) * 100;
 
   return (
-    <div className="space-y-3">
-      <Progress value={value} />
-      <ol className="flex justify-between text-xs font-medium text-stone-500">
+    <div className="space-y-4">
+      <Progress value={value} className="h-px" />
+      <ol className="flex justify-between text-[0.7rem] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
         {pipelineSteps.map((step, i) => (
-          <li
-            key={step.key}
-            className={i <= index ? "text-stone-900" : undefined}
-          >
+          <li key={step.key} className={i <= index ? "text-foreground" : undefined}>
             {step.label}
           </li>
         ))}
