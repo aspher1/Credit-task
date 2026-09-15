@@ -8,13 +8,22 @@ function today(): string {
   }).format(new Date());
 }
 
+function sanitizeIssueText(text: string): string {
+  return text
+    .replace(/\b(sue|lawsuit|legal action|attorney['’]?s? fees|take you to court)\b/gi, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 function issueLines(triage: Triage): string {
   if (!triage.issues.length) {
     return "1. **Inspection items** — Please see the attached inspection materials. Evidence is limited in this draft; we have not invented additional findings.";
   }
   return triage.issues
     .map((issue, index) => {
-      return `${index + 1}. **${issue.title}** — ${issue.suggested_ask} ${issue.evidence}`;
+      const ask = sanitizeIssueText(issue.suggested_ask);
+      const evidence = sanitizeIssueText(issue.evidence);
+      return `${index + 1}. **${issue.title}** — ${ask} ${evidence}`;
     })
     .join("\n");
 }
@@ -29,9 +38,13 @@ export function fillLetter(
     ? ` by ${job.deadline}`
     : "";
   const estimate =
-    triage.estimate_band && triage.estimate_band.toLowerCase() !== "null"
+    triage.estimate_band &&
+    /estimate/i.test(triage.estimate_band) &&
+    !/\$\s*\d/.test(triage.estimate_band)
       ? ` ${triage.estimate_band}`
-      : "";
+      : triage.estimate_band && /estimate/i.test(triage.estimate_band)
+        ? " Estimate only — no specific dollar amount is stated here."
+        : "";
   const revise =
     reviseNotes?.trim()
       ? `\n\n(Reviewer notes incorporated: ${reviseNotes.trim()})\n`
@@ -55,9 +68,7 @@ Please confirm how you would like to resolve these items${deadlineBit}. I am pre
 
 Sincerely,
 ${job.buyerName}
-
----
-Prepared with CreditAsk · Not legal advice · Draft for buyer review before sending`;
+Prepared with CreditAsk`;
 }
 
 export function letterHtml(text: string): string {

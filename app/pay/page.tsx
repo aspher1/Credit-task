@@ -2,7 +2,7 @@ import { Disclaimer } from "@/components/Disclaimer";
 import { PayActions } from "@/components/PayActions";
 import { SiteShell } from "@/components/SiteShell";
 import { Card, CardContent } from "@/components/ui/card";
-import { paywall, product } from "@/lib/copy";
+import { paywall, product, shortCompliance } from "@/lib/copy";
 import {
   allowDemo,
   stripePaymentLinkUrl,
@@ -28,6 +28,7 @@ export default function PayPage() {
         {paywall.headline}
       </h1>
       <p className="mt-4 text-lg text-stone-600">{paywall.body}</p>
+      <p className="mt-2 text-sm text-muted-foreground">{shortCompliance}</p>
       <div className="mt-8 space-y-6">
         <Disclaimer />
         <Card>

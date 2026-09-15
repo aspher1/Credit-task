@@ -4,7 +4,7 @@ import { Disclaimer } from "@/components/Disclaimer";
 import { LetterPreview } from "@/components/LetterPreview";
 import { PrintButton } from "@/components/PrintButton";
 import { Button } from "@/components/ui/button";
-import { paywall, product } from "@/lib/copy";
+import { paywall, product, shortCompliance } from "@/lib/copy";
 import { getJob } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
@@ -32,6 +32,7 @@ export default async function PdfPage({
             ? "This letter is not ready to print yet."
             : paywall.body}
         </p>
+        <p className="mt-2 text-sm text-muted-foreground">{shortCompliance}</p>
         <div className="mt-6">
           <Disclaimer />
         </div>
@@ -67,7 +68,7 @@ export default async function PdfPage({
       </div>
       <LetterPreview text={letter} draft={!approved} />
       <p className="no-print mt-6 text-xs text-muted-foreground">
-        Not legal advice. We don’t send this letter to the seller. No invented dollar amounts.
+        Not legal advice. We don’t negotiate or send this for you. No invented dollar amounts.
       </p>
     </div>
   );

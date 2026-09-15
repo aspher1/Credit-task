@@ -15,6 +15,15 @@ export const product = {
     "We don’t send this letter to the seller. Sending it — and any follow-up — is yours.",
 };
 
+export const shortCompliance =
+  "Not legal advice. We don’t negotiate with sellers.";
+
+export const letterPageFooter =
+  "Prepared with CreditAsk · Not legal advice · Draft for buyer review before sending · We don’t negotiate or send this for you";
+
+export const approveCheckbox =
+  "I understand this is not legal advice, and I’m responsible for sending this letter and any follow-up.";
+
 export const legalDisclaimer = {
   title: "Not legal advice",
   body: "CreditAsk drafts a ready-to-send letter based on what you upload. We are not a law firm, we do not provide legal advice, and we do not negotiate with sellers. Sending the letter and any negotiation are your responsibility (or your agent’s / attorney’s).",
@@ -23,9 +32,9 @@ export const legalDisclaimer = {
 export const intakeHelp = {
   address:
     "Where the inspection was done. Use the full mailing address.",
-  pdf: "Upload the full report if you have it. PDF preferred. Your inspection PDF is used only to draft your letter. Access is limited to drafting and human review. We don’t send it to the seller. We delete files 30 days after delivery unless you ask sooner.",
+  pdf: "Your inspection PDF is used only to draft your letter. Access is limited to drafting/review. We don’t send it to the seller. We delete files 30 days after delivery unless you ask sooner.",
   photos:
-    "If you don’t have a PDF, upload clear photos of each issue (wide shot + close-up). Your inspection photos are used only to draft your letter. Access is limited to drafting and human review. We don’t send them to the seller. We delete files 30 days after delivery unless you ask sooner.",
+    "Your inspection photos are used only to draft your letter. Access is limited to drafting/review. We don’t send them to the seller. We delete files 30 days after delivery unless you ask sooner.",
   askTarget:
     "Who should receive this letter? Seller, listing agent, landlord, or other (include their name).",
   askIntent:
@@ -39,7 +48,7 @@ export const paywall = {
   body: `After you approve the draft, pay ${PRICE_LABEL} once to download the final PDF. Secure checkout via Stripe.`,
   cta: "Get your letter — $79",
   finePrint:
-    "Test mode until live charges are approved. No letter is sent to the other party unless you choose to send it yourself.",
+    "Not legal advice. We don’t negotiate with sellers. Test mode until live charges are approved. No letter is sent to the other party unless you choose to send it yourself.",
 };
 
 export const featureCards = [
@@ -105,7 +114,8 @@ Output JSON:
 - risks[]: overclaim / weak evidence flags
 
 Rules:
-- Do not invent dollar amounts without evidence in the materials.
+- Do not invent dollar amounts without evidence in the materials. If unknown, set estimate_band to null.
+- Do not threaten legal action, lawsuits, reporting, or attorney involvement.
 - Prefer conservative asks when evidence is thin.
 - Flag health/safety items clearly.
 - Return JSON only.`;

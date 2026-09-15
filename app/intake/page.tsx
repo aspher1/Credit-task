@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { IntakeForm } from "@/components/IntakeForm";
 import { SiteShell } from "@/components/SiteShell";
+import { shortCompliance } from "@/lib/copy";
 import { getPayment } from "@/lib/store";
 
 export const dynamic = "force-dynamic";
@@ -22,6 +23,7 @@ export default async function IntakePage({
       <h1 className="text-3xl font-semibold tracking-tight text-stone-900">
         Inspection intake
       </h1>
+      <p className="mt-2 text-sm text-muted-foreground">{shortCompliance}</p>
       <p className="mt-2 text-sm text-muted-foreground">
         Files stay private on this server. We don’t send them to the seller.
       </p>

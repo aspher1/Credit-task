@@ -6,6 +6,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { approveCheckbox } from "@/lib/copy";
 
 export function ApproveForm({
   jobId,
@@ -79,10 +80,7 @@ export function ApproveForm({
           onChange={(event) => setUnderstood(event.target.checked)}
           required
         />
-        <span>
-          I understand this is not legal advice, and I’m responsible for sending this
-          letter and any follow-up.
-        </span>
+        <span>{approveCheckbox}</span>
       </label>
       <div className="flex flex-wrap gap-3">
         <Button

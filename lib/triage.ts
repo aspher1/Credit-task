@@ -206,7 +206,8 @@ function jobPrompt(job: Job, extra?: string): string {
     `Inspection PDF uploaded: ${job.pdfFilename ? "yes — " + job.pdfFilename : "no"}`,
     `Photos uploaded: ${job.photoFilenames.length} (${job.photoFilenames.join(", ") || "none"})`,
     extra ? `Reviewer notes: ${extra}` : "",
-    "PDF/photo bytes are stored privately and are not inlined here. Do not invent dollar amounts.",
+    "PDF/photo bytes are stored privately and are not inlined here.",
+    "Do not invent dollar amounts. Do not threaten legal action.",
   ]
     .filter(Boolean)
     .join("\n");
