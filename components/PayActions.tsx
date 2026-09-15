@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { product } from "@/lib/copy";
+import { paywall, product } from "@/lib/copy";
 
 export function PayActions({
   hasStripe,
@@ -41,7 +41,7 @@ export function PayActions({
     <div className="space-y-3">
       {hasStripe || paymentLink ? (
         <Button disabled={!!pending} onClick={() => start("stripe")} type="button">
-          {pending === "stripe" ? "Redirecting to Stripe…" : product.cta}
+          {pending === "stripe" ? "Redirecting to Stripe…" : paywall.cta}
         </Button>
       ) : (
         <p className="text-sm text-muted-foreground">

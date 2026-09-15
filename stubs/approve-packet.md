@@ -19,6 +19,7 @@
 - Photos: N
 
 ## Decision
+- [ ] I understand this is not legal advice. I have reviewed this draft, $79 payment unlocks PDF deliver, and inspection files are used only to draft the letter and deleted within 30 days. I’m responsible for sending this letter and any follow-up.
 - [ ] Approve → generate PDF (after paid)  
 - [ ] Revise — notes: ________  
 - [ ] Reject — reason: ________

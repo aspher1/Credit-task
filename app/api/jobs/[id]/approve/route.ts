@@ -16,7 +16,16 @@ export async function POST(
   if (job.status === "rejected") {
     return NextResponse.json({ error: "Rejected jobs cannot be approved." }, { status: 400 });
   }
-  const body = (await request.json().catch(() => ({}))) as { letter?: string };
+  const body = (await request.json().catch(() => ({}))) as {
+    letter?: string;
+    understood?: boolean | string;
+  };
+  if (body.understood !== true && body.understood !== "true") {
+    return NextResponse.json(
+      { error: "Confirm the review, pay, and retention checkbox before approve." },
+      { status: 400 },
+    );
+  }
   const letter = (body.letter || job.letterDraft || "").trim();
   if (!letter) {
     return NextResponse.json({ error: "Letter is empty." }, { status: 400 });

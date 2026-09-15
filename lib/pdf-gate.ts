@@ -9,8 +9,8 @@ export function printablePdfUnlocked(
 ): boolean {
   return (
     job.paid &&
-    (job.status === "approved" || job.status === "delivered") &&
-    job.status !== "rejected"
+    job.status !== "rejected" &&
+    (job.status === "approved" || job.status === "delivered")
   );
 }
 

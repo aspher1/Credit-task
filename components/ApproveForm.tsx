@@ -24,7 +24,7 @@ export function ApproveForm({
   const [pending, setPending] = useState<string | null>(null);
   const [understood, setUnderstood] = useState(false);
 
-  async function post(path: string, body: Record<string, string>) {
+  async function post(path: string, body: Record<string, string | boolean>) {
     setError(null);
     setPending(path);
     try {
@@ -78,6 +78,7 @@ export function ApproveForm({
           className="mt-1"
           checked={understood}
           onChange={(event) => setUnderstood(event.target.checked)}
+          name="understood"
           required
         />
         <span>{approveCheckbox}</span>
@@ -86,7 +87,9 @@ export function ApproveForm({
         <Button
           disabled={!!pending || !understood}
           type="button"
-          onClick={() => post(`/api/jobs/${jobId}/approve`, { letter: draft })}
+          onClick={() =>
+            post(`/api/jobs/${jobId}/approve`, { letter: draft, understood: true })
+          }
         >
           {pending?.endsWith("/approve") ? "Approving…" : "Approve"}
         </Button>

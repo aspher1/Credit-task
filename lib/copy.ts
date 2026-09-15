@@ -21,8 +21,10 @@ export const shortCompliance =
 export const letterPageFooter =
   "Prepared with CreditAsk · Not legal advice · Draft for buyer review · We don’t negotiate or send for you";
 
+export const letterAttribution = "Prepared with CreditAsk";
+
 export const approveCheckbox =
-  "I understand this is not legal advice, and I’m responsible for sending this letter and any follow-up.";
+  "I understand this is not legal advice. I have reviewed this draft, $79 payment unlocks PDF deliver, and inspection files are used only to draft the letter and deleted within 30 days. I’m responsible for sending this letter and any follow-up.";
 
 export const uploadPrivacy =
   "Your inspection files are used only to draft your letter. We delete uploads within 30 days.";

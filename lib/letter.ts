@@ -1,3 +1,4 @@
+import { letterAttribution } from "@/lib/copy";
 import { intentLabel, roleLabel, type Job, type Triage } from "@/lib/types";
 
 function today(): string {
@@ -10,6 +11,7 @@ function today(): string {
 
 function sanitizeIssueText(text: string): string {
   return text
+    .replace(/\bvia CreditAsk\b/gi, letterAttribution)
     .replace(/\b(sue|lawsuit|legal action|attorney['’]?s? fees|take you to court)\b/gi, "")
     .replace(/\s{2,}/g, " ")
     .trim();
@@ -68,7 +70,7 @@ Please confirm how you would like to resolve these items${deadlineBit}. I am pre
 
 Sincerely,
 ${job.buyerName}
-Prepared with CreditAsk`;
+${letterAttribution}`;
 }
 
 export function letterHtml(text: string): string {
@@ -76,7 +78,8 @@ export function letterHtml(text: string): string {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
-  const withBold = escaped.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  const attributed = escaped.replace(/via CreditAsk/gi, letterAttribution);
+  const withBold = attributed.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
   return withBold
     .split("\n")
     .map((line) => (line.trim() === "" ? "<br />" : `<p>${line}</p>`))

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import { intakeHelp, intakeSteps, product } from "@/lib/copy";
+import { intakeHelp, intakeSteps, product, shortCompliance, uploadPrivacy } from "@/lib/copy";
 import {
   ASK_INTENTS,
   ASK_TARGET_ROLES,
@@ -107,6 +107,7 @@ export function IntakeForm({
       <input type="hidden" name="askTargetRole" value={role} />
 
       <div className={step === 0 ? "space-y-5" : "hidden"}>
+        <p className="text-sm text-muted-foreground">{shortCompliance}</p>
         <Field label="Property address" required help={intakeHelp.address}>
           <Input required name="address" placeholder="123 Main St, City, ST 00000" />
         </Field>
@@ -134,7 +135,7 @@ export function IntakeForm({
       </div>
 
       <div className={step === 1 ? "space-y-5" : "hidden"}>
-        <Field label="Inspection PDF" help={intakeHelp.pdf}>
+        <Field label="Inspection PDF">
           <div
             onDragOver={(event) => {
               event.preventDefault();
@@ -163,8 +164,9 @@ export function IntakeForm({
               <span className="mt-1 block">{pdfFile ? pdfFile.name : "PDF preferred"}</span>
             </label>
           </div>
+          <p className="text-sm text-muted-foreground">{uploadPrivacy}</p>
         </Field>
-        <Field label="Inspection photos" help={intakeHelp.photos}>
+        <Field label="Inspection photos">
           <Input
             type="file"
             accept="image/jpeg,image/png,image/webp,image/heic,.jpg,.jpeg,.png,.webp,.heic"
@@ -173,6 +175,7 @@ export function IntakeForm({
               setPhotos(Array.from(event.target.files ?? []).filter((file) => file.size > 0))
             }
           />
+          <p className="text-sm text-muted-foreground">{uploadPrivacy}</p>
         </Field>
         <p className="text-xs text-muted-foreground">{fileHint}</p>
       </div>

@@ -1,5 +1,5 @@
-import { letterHtml } from "@/lib/letter";
 import { letterPageFooter } from "@/lib/copy";
+import { letterHtml } from "@/lib/letter";
 import { cn } from "@/lib/utils";
 
 export function LetterPreview({
@@ -11,7 +11,11 @@ export function LetterPreview({
 }) {
   return (
     <article className={cn("letter-page", draft && "letter-draft")}>
-      {draft ? <div className="letter-watermark" aria-hidden>DRAFT</div> : null}
+      {draft ? (
+        <div className="letter-watermark" aria-hidden>
+          DRAFT
+        </div>
+      ) : null}
       <div dangerouslySetInnerHTML={{ __html: letterHtml(text) }} />
       <p className="letter-footer">{letterPageFooter}</p>
     </article>
