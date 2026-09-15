@@ -5,7 +5,9 @@ export function Disclaimer({ compact = false }: { compact?: boolean }) {
   return (
     <Alert variant="muted">
       <AlertTitle>{legalDisclaimer.title}</AlertTitle>
-      {compact ? null : <AlertDescription>{legalDisclaimer.body}</AlertDescription>}
+      <AlertDescription className={compact ? "text-xs" : undefined}>
+        {legalDisclaimer.body}
+      </AlertDescription>
     </Alert>
   );
 }

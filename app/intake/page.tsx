@@ -24,9 +24,6 @@ export default async function IntakePage({
         Inspection intake
       </h1>
       <p className="mt-2 text-sm text-muted-foreground">{shortCompliance}</p>
-      <p className="mt-2 text-sm text-muted-foreground">
-        Files stay private on this server. We don’t send them to the seller.
-      </p>
       <div className="mt-8">
         <IntakeForm paymentId={payment?.id} paid={paid} />
       </div>

@@ -16,13 +16,16 @@ export const product = {
 };
 
 export const shortCompliance =
-  "Not legal advice. We don’t negotiate with sellers.";
+  "Not legal advice. We draft a letter you review and send — we don’t negotiate with sellers.";
 
 export const letterPageFooter =
-  "Prepared with CreditAsk · Not legal advice · Draft for buyer review before sending · We don’t negotiate or send this for you";
+  "Prepared with CreditAsk · Not legal advice · Draft for buyer review · We don’t negotiate or send for you";
 
 export const approveCheckbox =
   "I understand this is not legal advice, and I’m responsible for sending this letter and any follow-up.";
+
+export const uploadPrivacy =
+  "Your inspection files are used only to draft your letter. We delete uploads within 30 days.";
 
 export const legalDisclaimer = {
   title: "Not legal advice",
@@ -32,9 +35,8 @@ export const legalDisclaimer = {
 export const intakeHelp = {
   address:
     "Where the inspection was done. Use the full mailing address.",
-  pdf: "Your inspection PDF is used only to draft your letter. Access is limited to drafting/review. We don’t send it to the seller. We delete files 30 days after delivery unless you ask sooner.",
-  photos:
-    "Your inspection photos are used only to draft your letter. Access is limited to drafting/review. We don’t send them to the seller. We delete files 30 days after delivery unless you ask sooner.",
+  pdf: uploadPrivacy,
+  photos: uploadPrivacy,
   askTarget:
     "Who should receive this letter? Seller, listing agent, landlord, or other (include their name).",
   askIntent:
@@ -48,7 +50,7 @@ export const paywall = {
   body: `After you approve the draft, pay ${PRICE_LABEL} once to download the final PDF. Secure checkout via Stripe.`,
   cta: "Get your letter — $79",
   finePrint:
-    "Not legal advice. We don’t negotiate with sellers. Test mode until live charges are approved. No letter is sent to the other party unless you choose to send it yourself.",
+    "Not legal advice. We draft a letter you review and send — we don’t negotiate with sellers. Test mode until live charges are approved.",
 };
 
 export const featureCards = [
