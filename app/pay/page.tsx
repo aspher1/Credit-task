@@ -1,6 +1,7 @@
 import { Disclaimer } from "@/components/Disclaimer";
 import { PayActions } from "@/components/PayActions";
 import { SiteShell } from "@/components/SiteShell";
+import { Card, CardContent } from "@/components/ui/card";
 import { paywall, product } from "@/lib/copy";
 import {
   allowDemo,
@@ -21,29 +22,31 @@ export default function PayPage() {
   const paymentLink = stripePaymentLinkUrl();
 
   return (
-    <SiteShell>
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--accent)]">
-        Stripe test mode
-      </p>
-      <h1 className="mt-2 font-serif text-4xl text-[var(--navy)]">{paywall.headline}</h1>
-      <p className="mt-4 max-w-2xl text-lg text-[var(--muted)]">{paywall.body}</p>
-      <div className="mt-8 max-w-xl space-y-6">
+    <SiteShell width="intake">
+      <p className="text-xs font-medium text-stone-500">Stripe test mode</p>
+      <h1 className="mt-2 text-3xl font-semibold tracking-tight text-stone-900">
+        {paywall.headline}
+      </h1>
+      <p className="mt-4 text-lg text-stone-600">{paywall.body}</p>
+      <div className="mt-8 space-y-6">
         <Disclaimer />
-        <div className="card space-y-4">
-          <p className="text-sm">
-            {product.name} is {product.price} once. Checkout uses Stripe{" "}
-            <strong>test mode only</strong>. Live keys are rejected.
-          </p>
-          {stripeError ? (
-            <p className="text-sm text-rose-800">{stripeError}</p>
-          ) : null}
-          <PayActions
-            hasStripe={hasStripe}
-            paymentLink={paymentLink}
-            allowDemo={allowDemo()}
-          />
-          <p className="text-xs text-[var(--muted)]">{paywall.finePrint}</p>
-        </div>
+        <Card>
+          <CardContent className="space-y-4 pt-5">
+            <p className="text-sm">
+              {product.name} is {product.price} once. Checkout uses Stripe{" "}
+              <strong>test mode only</strong>. Live keys are rejected.
+            </p>
+            {stripeError ? (
+              <p className="text-sm text-red-800">{stripeError}</p>
+            ) : null}
+            <PayActions
+              hasStripe={hasStripe}
+              paymentLink={paymentLink}
+              allowDemo={allowDemo()}
+            />
+            <p className="text-xs text-muted-foreground">{paywall.finePrint}</p>
+          </CardContent>
+        </Card>
       </div>
     </SiteShell>
   );

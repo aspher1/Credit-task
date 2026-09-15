@@ -2,7 +2,6 @@ import { cookies } from "next/headers";
 import { IntakeForm } from "@/components/IntakeForm";
 import { SiteShell } from "@/components/SiteShell";
 import { getPayment } from "@/lib/store";
-import { intakeHelp } from "@/lib/copy";
 
 export const dynamic = "force-dynamic";
 
@@ -19,13 +18,14 @@ export default async function IntakePage({
   const paid = payment?.status === "paid";
 
   return (
-    <SiteShell>
-      <h1 className="font-serif text-4xl text-[var(--navy)]">Inspection intake</h1>
-      <p className="mt-3 max-w-2xl text-[var(--muted)]">
-        {intakeHelp.address} Files are stored privately on this server (not in{" "}
-        <code>/public</code>).
+    <SiteShell width="intake">
+      <h1 className="text-3xl font-semibold tracking-tight text-stone-900">
+        Inspection intake
+      </h1>
+      <p className="mt-2 text-sm text-muted-foreground">
+        Files stay private on this server. We don’t send them to the seller.
       </p>
-      <div className="mt-8 max-w-2xl">
+      <div className="mt-8">
         <IntakeForm paymentId={payment?.id} paid={paid} />
       </div>
     </SiteShell>

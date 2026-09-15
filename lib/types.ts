@@ -129,11 +129,11 @@ export function roleLabel(role: AskTargetRole): string {
 export function statusLabel(status: JobStatus): string {
   switch (status) {
     case "intake_received":
-      return "Intake received";
+      return "Received";
     case "triaged":
-      return "Triaged";
+      return "Drafting";
     case "draft_ready":
-      return "Draft ready";
+      return "Ready";
     case "approved":
       return "Approved";
     case "delivered":
@@ -141,4 +141,12 @@ export function statusLabel(status: JobStatus): string {
     case "rejected":
       return "Rejected";
   }
+}
+
+export function pipelineStage(
+  status: JobStatus,
+): "received" | "drafting" | "ready" {
+  if (status === "intake_received") return "received";
+  if (status === "triaged") return "drafting";
+  return "ready";
 }

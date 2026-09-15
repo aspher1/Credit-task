@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 export function ApproveForm({
   jobId,
@@ -43,27 +47,31 @@ export function ApproveForm({
 
   return (
     <div className="space-y-4">
-      <label className="block">
-        <span className="text-sm font-medium text-[var(--navy)]">Letter preview (editable)</span>
-        <textarea
-          className="input mt-2 min-h-[28rem] font-serif leading-7"
+      <div className="space-y-2">
+        <Label htmlFor="letter">Letter preview (editable)</Label>
+        <Textarea
+          id="letter"
+          className="min-h-[28rem] font-serif leading-7"
           value={draft}
           onChange={(event) => setDraft(event.target.value)}
         />
-      </label>
-      <label className="block">
-        <span className="text-sm font-medium text-[var(--navy)]">Revise notes / reject reason</span>
-        <textarea
-          className="input mt-2 min-h-[6rem]"
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="notes">Revise notes / reject reason</Label>
+        <Textarea
+          id="notes"
+          className="min-h-[6rem]"
           value={notes}
           onChange={(event) => setNotes(event.target.value)}
           placeholder="Optional notes for one revise loop, or a reject reason"
         />
-      </label>
+      </div>
       {error ? (
-        <p className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-800">{error}</p>
+        <Alert variant="destructive">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
       ) : null}
-      <label className="flex items-start gap-2 text-sm text-[var(--navy)]">
+      <label className="flex items-start gap-2 text-sm text-stone-800">
         <input
           type="checkbox"
           className="mt-1"
@@ -77,16 +85,15 @@ export function ApproveForm({
         </span>
       </label>
       <div className="flex flex-wrap gap-3">
-        <button
-          className="btn-primary"
+        <Button
           disabled={!!pending || !understood}
           type="button"
           onClick={() => post(`/api/jobs/${jobId}/approve`, { letter: draft })}
         >
           {pending?.endsWith("/approve") ? "Approving…" : "Approve"}
-        </button>
-        <button
-          className="btn-secondary"
+        </Button>
+        <Button
+          variant="outline"
           disabled={!!pending || reviseUsed}
           type="button"
           title={reviseUsed ? "One revise loop already used" : undefined}
@@ -97,9 +104,9 @@ export function ApproveForm({
           }
         >
           {reviseUsed ? "Revise used" : pending?.endsWith("/revise") ? "Revising…" : "Revise"}
-        </button>
-        <button
-          className="btn-danger"
+        </Button>
+        <Button
+          variant="destructive"
           disabled={!!pending}
           type="button"
           onClick={() =>
@@ -109,19 +116,19 @@ export function ApproveForm({
           }
         >
           Reject
-        </button>
-        <button
-          className="btn-secondary"
+        </Button>
+        <Button
+          variant="outline"
           disabled={!!pending}
           type="button"
           onClick={() => post(`/api/jobs/${jobId}/deliver`, {})}
         >
           Mark delivered
-        </button>
+        </Button>
       </div>
-      <p className="text-xs text-[var(--muted)]">
+      <p className="text-xs text-muted-foreground">
         Approve is required before delivery. PDF download stays gated on $79 payment.
-        One revise loop, then re-approve.
+        One revise loop, then re-approve. We don’t send this letter to the seller.
       </p>
     </div>
   );

@@ -1,15 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Source_Serif_4 } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import { product } from "@/lib/copy";
 
 const sans = Geist({
   variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const serif = Source_Serif_4({
-  variable: "--font-source-serif",
   subsets: ["latin"],
 });
 
@@ -25,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${sans.variable} ${serif.variable} antialiased`}>
+    <html lang="en" className="light" style={{ colorScheme: "light" }}>
+      <body className={`${sans.variable} bg-background text-foreground antialiased`}>
         {children}
       </body>
     </html>

@@ -2,8 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ApproveForm } from "@/components/ApproveForm";
 import { Disclaimer } from "@/components/Disclaimer";
+import { JobProgress } from "@/components/JobProgress";
 import { SiteShell } from "@/components/SiteShell";
 import { StatusBadge } from "@/components/StatusBadge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { product } from "@/lib/copy";
 import { getJob } from "@/lib/store";
 import { intentLabel, roleLabel } from "@/lib/types";
 
@@ -20,72 +23,88 @@ export default async function ApprovePage({
   const letter = job.letterFinal || job.letterDraft;
 
   return (
-    <SiteShell admin>
-      <p className="text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
+    <SiteShell>
+      <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
         Human approve packet
       </p>
       <div className="mt-2 flex flex-wrap items-center gap-3">
-        <h1 className="font-serif text-3xl text-[var(--navy)]">Job {job.id}</h1>
+        <h1 className="text-3xl font-semibold tracking-tight text-stone-900">
+          Job {job.id}
+        </h1>
         <StatusBadge status={job.status} />
       </div>
-      <p className="mt-2 text-[var(--muted)]">{job.address}</p>
+      <p className="mt-2 text-stone-600">{job.address}</p>
+      <div className="mt-6">
+        <JobProgress status={job.status} />
+      </div>
       <div className="mt-6">
         <Disclaimer />
       </div>
 
-      <section className="card mt-6 space-y-2 text-sm">
-        <p>
-          <strong>Ask target:</strong> {job.askTargetName} / {roleLabel(job.askTargetRole)}
-        </p>
-        <p>
-          <strong>Ask intent:</strong> {intentLabel(job.askIntent, job.askIntentOther)}
-        </p>
-        <p>
-          <strong>Payment:</strong> Stripe / demo {job.paid ? "paid" : "unpaid"} ·{" "}
-          {job.paymentMode}
-        </p>
-        <p>
-          <strong>Attachments:</strong> PDF {job.pdfFilename ? "yes" : "no"}; photos{" "}
-          {job.photoFilenames.length}
-        </p>
-        {job.pdfFilename ? (
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle>Packet</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-2 text-sm">
           <p>
-            <Link className="underline" href={`/api/files/${job.id}/${job.pdfFilename}`}>
-              Open inspection PDF
-            </Link>
+            <strong>Ask target:</strong> {job.askTargetName} / {roleLabel(job.askTargetRole)}
           </p>
-        ) : null}
-        {job.photoFilenames.length ? (
-          <ul className="list-disc pl-5">
-            {job.photoFilenames.map((name) => (
-              <li key={name}>
-                <Link className="underline" href={`/api/files/${job.id}/${name}`}>
-                  {name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </section>
+          <p>
+            <strong>Ask intent:</strong> {intentLabel(job.askIntent, job.askIntentOther)}
+          </p>
+          <p>
+            <strong>Payment:</strong> {job.paid ? "paid" : "unpaid"} · {job.paymentMode}
+          </p>
+          <p>
+            <strong>Attachments:</strong> PDF {job.pdfFilename ? "yes" : "no"}; photos{" "}
+            {job.photoFilenames.length}
+          </p>
+          <p className="text-muted-foreground">{product.successSend}</p>
+          {job.pdfFilename ? (
+            <p>
+              <Link className="underline" href={`/api/files/${job.id}/${job.pdfFilename}`}>
+                Open inspection PDF
+              </Link>
+            </p>
+          ) : null}
+          {job.photoFilenames.length ? (
+            <ul className="list-disc pl-5">
+              {job.photoFilenames.map((name) => (
+                <li key={name}>
+                  <Link className="underline" href={`/api/files/${job.id}/${name}`}>
+                    {name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+        </CardContent>
+      </Card>
 
       {job.triage ? (
-        <section className="card mt-6 space-y-2 text-sm">
-          <h2 className="font-serif text-xl text-[var(--navy)]">Triage summary</h2>
-          <p>Ask type: {job.triage.ask_type}</p>
-          <p>Estimate band: {job.triage.estimate_band || "none"} (estimate only)</p>
-          <p>
-            Top issues:{" "}
-            {job.triage.issues.map((issue) => issue.title).join("; ") || "none"}
-          </p>
-          <p>Missing info / risks: {[...job.triage.missing_info, ...job.triage.risks].join(" · ")}</p>
-        </section>
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>Triage summary</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm">
+            <p>Ask type: {job.triage.ask_type}</p>
+            <p>Estimate band: {job.triage.estimate_band || "none"} (estimate only)</p>
+            <p>
+              Top issues:{" "}
+              {job.triage.issues.map((issue) => issue.title).join("; ") || "none"}
+            </p>
+            <p>
+              Missing info / risks:{" "}
+              {[...job.triage.missing_info, ...job.triage.risks].join(" · ")}
+            </p>
+          </CardContent>
+        </Card>
       ) : null}
 
       <section className="mt-6">
-        <h2 className="font-serif text-xl text-[var(--navy)]">Decision</h2>
-        <p className="mt-1 text-sm text-[var(--muted)]">
-          Approve → generate PDF after paid. Revise notes, then re-approve (one loop).
-          Reject with a reason.
+        <h2 className="text-xl font-semibold text-stone-900">Decision</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Approve requires the not-legal-advice checkbox. One revise loop, then re-approve.
         </p>
         <div className="mt-4">
           <ApproveForm

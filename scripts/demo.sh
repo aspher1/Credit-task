@@ -34,12 +34,12 @@ echo "==> Seed example job"
 curl -sf -X POST "$BASE/api/demo/setup" | tee /tmp/creditask-demo-setup.json
 echo
 
-echo "==> Demo $79 payment (stub, no Stripe charge)"
+echo '==> Demo $79 payment (stub, no Stripe charge)'
 PAY_JSON="$(curl -sf -X POST "$BASE/api/checkout" \
   -H "Content-Type: application/json" \
   -d '{"mode":"demo"}')"
 echo "$PAY_JSON"
-PAYMENT_ID="$(node -e 'const j=JSON.parse(process.argv[1]); process.stdout.write(j.paymentId || "")' "$PAY_JSON")"
+PAYMENT_ID="$(printf '%s' "$PAY_JSON" | node -e 'let s="";process.stdin.on("data",d=>s+=d);process.stdin.on("end",()=>{process.stdout.write(JSON.parse(s).paymentId||"")})')"
 
 FIXTURE="$ROOT/scripts/fixtures/sample-inspection.pdf"
 if [ ! -f "$FIXTURE" ]; then
@@ -57,7 +57,7 @@ INTAKE_JSON="$(curl -sf -X POST "$BASE/api/intake" \
   -F "paymentId=$PAYMENT_ID" \
   -F "pdf=@${FIXTURE};type=application/pdf")"
 echo "$INTAKE_JSON"
-JOB_ID="$(node -e 'const j=JSON.parse(process.argv[1]); process.stdout.write(j.id || "")' "$INTAKE_JSON")"
+JOB_ID="$(printf '%s' "$INTAKE_JSON" | node -e 'let s="";process.stdin.on("data",d=>s+=d);process.stdin.on("end",()=>{process.stdout.write(JSON.parse(s).id||"")})')"
 
 if [ -z "$JOB_ID" ]; then
   echo "Intake did not return a job id"

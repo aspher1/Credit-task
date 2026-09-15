@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { paywall, product } from "@/lib/copy";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { product } from "@/lib/copy";
 
 export function PayActions({
   hasStripe,
@@ -38,28 +40,23 @@ export function PayActions({
   return (
     <div className="space-y-3">
       {hasStripe ? (
-        <button
-          className="btn-primary w-full sm:w-auto"
-          disabled={!!pending}
-          onClick={() => start("stripe")}
-          type="button"
-        >
-          {pending === "stripe" ? "Redirecting to Stripe…" : paywall.cta}
-        </button>
+        <Button disabled={!!pending} onClick={() => start("stripe")} type="button">
+          {pending === "stripe" ? "Redirecting to Stripe…" : product.cta}
+        </Button>
       ) : paymentLink ? (
-        <a className="btn-primary inline-flex" href={paymentLink}>
-          {paywall.cta} (Payment Link)
-        </a>
+        <Button asChild>
+          <a href={paymentLink}>{product.cta}</a>
+        </Button>
       ) : (
-        <p className="text-sm text-[var(--muted)]">
+        <p className="text-sm text-muted-foreground">
           Stripe test keys are not set. Use the demo checkout below, or add{" "}
           <code>STRIPE_SECRET_KEY</code> / <code>STRIPE_PAYMENT_LINK_URL</code> in
           <code> .env.local</code>.
         </p>
       )}
       {allowDemo ? (
-        <button
-          className="btn-secondary w-full sm:w-auto"
+        <Button
+          variant="outline"
           disabled={!!pending}
           onClick={() => start("demo")}
           type="button"
@@ -67,10 +64,12 @@ export function PayActions({
           {pending === "demo"
             ? "Starting demo payment…"
             : `Continue in test/stub mode (${product.price} marked paid)`}
-        </button>
+        </Button>
       ) : null}
       {error ? (
-        <p className="rounded-md bg-rose-50 px-3 py-2 text-sm text-rose-800">{error}</p>
+        <Alert variant="destructive">
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
       ) : null}
     </div>
   );

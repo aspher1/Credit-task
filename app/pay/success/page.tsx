@@ -2,6 +2,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { Disclaimer } from "@/components/Disclaimer";
 import { SiteShell } from "@/components/SiteShell";
+import { Button } from "@/components/ui/button";
 import {
   getPayment,
   getPaymentByStripeSession,
@@ -60,20 +61,22 @@ export default async function PaySuccessPage({
   const intakeHref = paymentId ? `/intake?paymentId=${encodeURIComponent(paymentId)}` : "/intake";
 
   return (
-    <SiteShell>
-      <h1 className="font-serif text-4xl text-[var(--navy)]">Payment step complete</h1>
-      <p className="mt-4 max-w-2xl text-[var(--muted)]">{detail}</p>
-      <div className="mt-6 max-w-xl space-y-4">
+    <SiteShell width="intake">
+      <h1 className="text-3xl font-semibold tracking-tight text-stone-900">
+        Payment step complete
+      </h1>
+      <p className="mt-4 text-stone-600">{detail}</p>
+      <div className="mt-6 space-y-4">
         <Disclaimer />
         <div className="flex flex-wrap gap-3">
-          <Link className="btn-primary" href={intakeHref}>
-            Continue to intake
-          </Link>
-          <Link className="btn-secondary" href="/pay">
-            Back to pay
-          </Link>
+          <Button asChild>
+            <Link href={intakeHref}>Continue to intake</Link>
+          </Button>
+          <Button variant="outline" asChild>
+            <Link href="/pay">Back to pay</Link>
+          </Button>
         </div>
-        <p className="text-sm text-[var(--muted)]">
+        <p className="text-sm text-muted-foreground">
           Status: {paid ? "paid (test/demo)" : "unpaid"}
         </p>
       </div>
