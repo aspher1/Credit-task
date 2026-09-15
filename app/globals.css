@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+:root {
+  --navy: #13293d;
+  --navy-2: #1b3a4b;
+  --cream: #f6f1e8;
+  --paper: #fffcf7;
+  --ink: #1c1917;
+  --accent: #b4532a;
+  --muted: #5c6570;
+  --line: #e4ddd2;
+  --background: var(--cream);
+  --foreground: var(--ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-source-serif);
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: var(--navy);
+  color: white;
+  font-weight: 560;
+  padding: 0.7rem 1.2rem;
+  font-size: 0.95rem;
+}
+
+.btn-primary:hover {
+  background: var(--navy-2);
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.btn-danger:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid var(--line);
+  background: white;
+  color: var(--navy);
+  font-weight: 560;
+  padding: 0.7rem 1.2rem;
+  font-size: 0.95rem;
+}
+
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid #fecaca;
+  background: #fff1f2;
+  color: #9f1239;
+  font-weight: 560;
+  padding: 0.7rem 1.2rem;
+  font-size: 0.95rem;
+}
+
+.input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  background: white;
+  padding: 0.65rem 0.8rem;
+  color: var(--ink);
+}
+
+.input:focus,
+.input-file:focus {
+  outline: 2px solid color-mix(in srgb, var(--navy) 25%, transparent);
+  outline-offset: 1px;
+}
+
+.input-file {
+  width: 100%;
+  border: 1px dashed var(--line);
+  border-radius: 0.6rem;
+  background: white;
+  padding: 0.7rem;
+}
+
+.card {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  border-radius: 1rem;
+  padding: 1.25rem;
+}
+
+.letter-paper {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  padding: 2rem 2.25rem;
+  box-shadow: 0 8px 30px rgba(19, 41, 61, 0.06);
+}
+
+.letter-paper p {
+  margin: 0 0 0.4rem;
+}
+
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+  .letter-paper {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+}
