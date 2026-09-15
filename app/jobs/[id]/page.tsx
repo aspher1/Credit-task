@@ -9,6 +9,7 @@ import { StatusBadge } from "@/components/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { paywall, product } from "@/lib/copy";
+import { letterIsUnapprovedDraft, printablePdfUnlocked } from "@/lib/pdf-gate";
 import { getJob } from "@/lib/store";
 import { intentLabel, roleLabel } from "@/lib/types";
 
@@ -26,9 +27,7 @@ export default async function JobPage({
   const isAdmin = !!session?.user;
   const letter = job.letterFinal || job.letterDraft;
   const ready = job.status === "draft_ready" || job.status === "approved" || job.status === "delivered";
-  const approved = job.status === "approved" || job.status === "delivered";
-  const canOpenPdf =
-    !!letter && job.paid && (job.status === "approved" || job.status === "delivered");
+  const canOpenPdf = !!letter && printablePdfUnlocked(job);
 
   return (
     <SiteShell>
@@ -144,7 +143,7 @@ export default async function JobPage({
         <p className="mt-1 text-sm text-muted-foreground">{product.successSend}</p>
         <div className="mt-4 overflow-x-auto">
           {letter ? (
-            <LetterPreview text={letter} draft={!approved} />
+            <LetterPreview text={letter} draft={letterIsUnapprovedDraft(job)} />
           ) : (
             <p>No draft yet.</p>
           )}
