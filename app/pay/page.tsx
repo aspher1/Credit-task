@@ -51,7 +51,7 @@ export default function PayPage() {
           </div>
         </div>
 
-        <div className="panel space-y-5 rounded-xl px-6 py-7 shadow-sm sm:px-8 sm:py-8">
+        <div className="panel space-y-5 rounded-lg px-6 py-7 shadow-sm sm:px-8 sm:py-8">
           <PayActions checkoutReady={ready} />
           <p className="text-xs leading-relaxed text-stone-500">{paywall.finePrint}</p>
         </div>

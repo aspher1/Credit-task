@@ -74,10 +74,16 @@ body {
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  background:
-    radial-gradient(900px 420px at 12% -8%, rgba(255, 252, 245, 0.95), transparent 58%),
-    radial-gradient(720px 380px at 92% 0%, rgba(238, 242, 247, 0.7), transparent 52%),
-    #f7f4ee;
+  background: #f7f4ee;
+}
+
+.hero-band {
+  background-color: #0b1220;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 4.5rem 4.5rem;
+  color: #f7f4ee;
 }
 
 .kicker {
@@ -86,6 +92,10 @@ body {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--primary);
+}
+
+.hero-band .kicker {
+  color: #93c5fd;
 }
 
 .accent-rule {

@@ -28,15 +28,15 @@ function Inner({
 export default function HomePage() {
   return (
     <SiteShell width="landing">
-      <section className="relative overflow-x-hidden py-12 sm:py-16 lg:py-20">
+      <section className="hero-band relative overflow-x-hidden py-16 sm:py-20 lg:py-28">
         <Inner className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-16">
           <Reveal>
             <p className="kicker">{product.heroBadge}</p>
             <div className="accent-rule mt-5" />
-            <h1 className="font-display mt-6 max-w-3xl text-[2.25rem] leading-[1.12] text-stone-900 sm:text-5xl lg:text-[3.75rem] lg:leading-[1.08]">
+            <h1 className="font-display mt-6 max-w-3xl text-[2.25rem] leading-[1.12] text-[#f7f4ee] sm:text-5xl lg:text-[3.75rem] lg:leading-[1.08]">
               {product.heroH1}
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-stone-600 sm:text-lg">
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70 sm:text-lg">
               {product.heroSub}
             </p>
             <div className="mt-8">
@@ -51,13 +51,13 @@ export default function HomePage() {
         </Inner>
       </section>
 
-      <section className="bg-[#efece4]">
+      <section className="border-b border-stone-200 bg-[#f7f4ee]">
         <Inner>
           <ul className="grid sm:grid-cols-3">
             {product.trustRow.map((item) => (
               <li
                 key={item}
-                className="border-t border-stone-200 px-0 py-6 text-sm text-stone-800 sm:border-t-0 sm:border-l sm:px-8 sm:py-8 first:border-l-0"
+                className="border-t border-stone-200 px-0 py-6 text-sm text-stone-800 sm:border-t-0 sm:border-l sm:px-8 sm:py-8 sm:first:border-l-0"
               >
                 {item}
               </li>
@@ -66,15 +66,15 @@ export default function HomePage() {
         </Inner>
       </section>
 
-      <section className="py-16 sm:py-20">
+      <section className="py-16 sm:py-24">
         <Inner className="grid gap-4 md:grid-cols-3 md:gap-5">
           {featureCards.map((card, index) => (
             <Reveal key={card.title} delayMs={index * 40}>
-              <article className="panel rounded-xl p-6 sm:p-7">
+              <article className="panel rounded-lg p-6 sm:p-8">
                 <p className="text-xs font-semibold tracking-[0.16em] text-primary uppercase">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <h2 className="font-display mt-4 text-2xl text-stone-900">{card.title}</h2>
+                <h2 className="font-display mt-5 text-2xl text-stone-900">{card.title}</h2>
                 <p className="mt-3 text-sm leading-relaxed text-stone-600">{card.body}</p>
               </article>
             </Reveal>
@@ -82,12 +82,12 @@ export default function HomePage() {
         </Inner>
       </section>
 
-      <section id="how" className="scroll-mt-24 bg-[#f3efe7] py-16 sm:py-20">
+      <section id="how" className="scroll-mt-24 border-y border-stone-200 bg-[#f3efe7] py-16 sm:py-24">
         <Inner>
           <Reveal>
             <h2 className="font-display text-3xl text-stone-900 sm:text-4xl">How it works</h2>
           </Reveal>
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             {howItWorks.map((step, index) => (
               <Reveal key={step.n} delayMs={index * 40}>
                 <article>
@@ -101,10 +101,10 @@ export default function HomePage() {
         </Inner>
       </section>
 
-      <section className="py-16 sm:py-20">
+      <section className="py-16 sm:py-24">
         <Inner className="grid gap-4 lg:grid-cols-2">
           <Reveal>
-            <article className="panel rounded-xl p-7 sm:p-9">
+            <article className="panel rounded-lg p-7 sm:p-9">
               <h2 className="font-display text-3xl text-stone-900">In scope</h2>
               <ul className="mt-8 space-y-4">
                 {inclusions.map((item) => (
@@ -117,7 +117,7 @@ export default function HomePage() {
             </article>
           </Reveal>
           <Reveal delayMs={60}>
-            <article className="rounded-xl border border-stone-200 bg-[#f3efe7] p-7 shadow-sm sm:p-9">
+            <article className="rounded-lg border border-stone-200 bg-[#f3efe7] p-7 shadow-sm sm:p-9">
               <h2 className="font-display text-3xl text-stone-900">Out of scope</h2>
               <ul className="mt-8 space-y-4">
                 {outOfScope.map((item) => (
@@ -132,13 +132,13 @@ export default function HomePage() {
         </Inner>
       </section>
 
-      <section className="pb-8">
+      <section className="pb-10">
         <Inner>
           <Disclaimer />
         </Inner>
       </section>
 
-      <section className="bg-[#eef2f7] py-16 sm:py-20">
+      <section className="border-t border-stone-200 bg-[#f3efe7] py-16 sm:py-20">
         <Inner className="max-w-3xl text-center">
           <Reveal>
             <h2 className="font-display text-3xl leading-tight text-stone-900 sm:text-4xl">
@@ -159,8 +159,8 @@ function HeroLetterMock() {
   return (
     <div className="relative mx-auto w-full max-w-md overflow-hidden lg:max-w-none">
       <div className="relative mx-auto aspect-[4/5] max-h-[28rem] w-full max-w-[22rem] sm:max-h-[32rem] sm:max-w-none">
-        <div className="absolute top-[10%] right-[8%] left-[18%] h-[74%] rotate-6 rounded-xl border border-stone-200 bg-stone-100 shadow-sm" />
-        <div className="panel absolute inset-x-[10%] inset-y-[6%] overflow-hidden rounded-xl p-7 shadow-md sm:p-9 lg:-rotate-2">
+        <div className="absolute top-[12%] right-[6%] left-[20%] h-[70%] rotate-6 border border-white/15 bg-[#111a2c]" />
+        <div className="absolute inset-x-[10%] inset-y-[6%] overflow-hidden border border-stone-200 bg-white p-7 shadow-md sm:p-9 lg:-rotate-2">
           <div className="flex items-center justify-between gap-3">
             <span className="text-[0.7rem] font-semibold tracking-[0.14em] text-stone-500 uppercase">
               {letterAttribution}
