@@ -10,10 +10,13 @@ export const product = {
   heroBadge: "Inspection contingency · ~24h",
   heroSub:
     "Upload your inspection. We triage the findings and draft a credit request you send yourself.",
-  trustRow: ["Fixed $79", "~24h", "You send the letter"] as const,
+  trustRow: ["Fixed $79", "~24h turnaround", "You send the letter"] as const,
   successSend:
     "We don’t send this letter to the seller. Sending it — and any follow-up — is yours.",
 };
+
+export const approveSuccess =
+  "We don’t send this letter to the seller. Sending it — and any follow-up — is yours.";
 
 export const shortCompliance =
   "Not legal advice. We draft a letter you review and send — we don’t negotiate with sellers.";

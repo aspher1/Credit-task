@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { FileText, ListChecks, Upload } from "lucide-react";
 import { Disclaimer } from "@/components/Disclaimer";
+import { Frame } from "@/components/Frame";
+import { LetterArtifact } from "@/components/LetterArtifact";
 import { SiteShell } from "@/components/SiteShell";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import {
   featureCards,
   howItWorks,
@@ -13,101 +12,169 @@ import {
   product,
 } from "@/lib/copy";
 
-const cardIcons = [Upload, ListChecks, FileText];
+const includedHref = "#whats-included";
 
 export default function HomePage() {
   return (
-    <SiteShell width="landing">
-      <section className="pt-4">
-        <p className="inline-flex rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-medium text-stone-600">
-          {product.heroBadge}
-        </p>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-stone-900 sm:text-5xl">
-          {product.heroH1}
-        </h1>
-        <p className="mt-4 max-w-xl text-lg text-stone-600">{product.heroSub}</p>
-        <div className="mt-8">
-          <Button size="lg" asChild>
-            <Link href="/pay">{product.cta}</Link>
-          </Button>
-        </div>
-        <p className="mt-4 text-sm text-stone-500">
-          {product.trustRow.join(" · ")}
-        </p>
+    <SiteShell chrome="cinematic">
+      <section className="hero-cinematic min-h-[calc(100svh-4rem)]">
+        <Frame className="grid items-center gap-12 py-16 lg:grid-cols-12 lg:gap-8 lg:py-20">
+          <div className="lg:col-span-7">
+            <p className="kicker text-[var(--paper)]/55">{product.heroBadge}</p>
+            <span className="mt-6 block h-px w-10 bg-[var(--paper)]/35" aria-hidden />
+            <h1 className="display mt-8 max-w-[14ch] text-[2.75rem] text-[var(--paper)] sm:text-6xl lg:text-[4.85rem]">
+              {product.heroH1}
+            </h1>
+            <p className="mt-8 max-w-xl text-lg leading-relaxed text-[var(--paper)]/72 sm:text-xl">
+              {product.heroSub}
+            </p>
+            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <Button size="lg" variant="inverse" asChild>
+                <Link href="/pay">{product.cta}</Link>
+              </Button>
+              <Link
+                href={includedHref}
+                className="text-sm text-[var(--paper)]/70 underline-offset-4 hover:text-[var(--paper)] hover:underline"
+              >
+                See what’s included
+              </Link>
+            </div>
+          </div>
+          <div className="lg:col-span-5">
+            <LetterArtifact />
+          </div>
+        </Frame>
       </section>
 
-      <section className="mt-14 grid gap-4 sm:grid-cols-3">
-        {featureCards.map((card, index) => {
-          const Icon = cardIcons[index];
-          return (
-            <Card key={card.title}>
-              <CardHeader>
-                <Icon className="size-5 text-blue-700" />
-                <CardTitle className="mt-2">{card.title}</CardTitle>
-                <CardDescription>{card.body}</CardDescription>
-              </CardHeader>
-            </Card>
-          );
-        })}
+      <section className="border-b border-border bg-[var(--paper)]">
+        <Frame>
+          <ul className="grid sm:grid-cols-3">
+            {product.trustRow.map((item, index) => (
+              <li
+                key={item}
+                className="border-t border-border py-8 sm:border-t-0 sm:border-l sm:px-10 sm:py-12 sm:first:border-l-0 sm:first:pl-0"
+              >
+                <p className="kicker">
+                  {index === 0 ? "Price" : index === 1 ? "Turnaround" : "Responsibility"}
+                </p>
+                <p className="mt-3 text-xl font-medium tracking-tight text-foreground sm:text-2xl">
+                  {item}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </Frame>
       </section>
 
-      <section id="how" className="mt-16 scroll-mt-20">
-        <h2 className="text-xl font-semibold text-stone-900">How it works</h2>
-        <ol className="mt-6 grid gap-4 sm:grid-cols-2">
-          {howItWorks.map((step) => (
-            <li key={step.n} className="flex gap-3">
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-blue-700 text-xs font-semibold text-white">
-                {step.n}
-              </span>
-              <div>
-                <p className="font-medium text-stone-900">{step.title}</p>
-                <p className="mt-1 text-sm text-stone-600">{step.body}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+      <section className="bg-[var(--paper)] py-20 sm:py-28">
+        <Frame>
+          <p className="kicker">The pack</p>
+          <h2 className="display mt-4 max-w-[16ch] text-4xl text-foreground sm:text-5xl">
+            Three moves. One letter.
+          </h2>
+          <div className="mt-14 grid border-t border-border md:grid-cols-3">
+            {featureCards.map((card, index) => (
+              <article
+                key={card.title}
+                className="border-border py-10 md:border-l md:px-10 md:first:border-l-0 md:first:pl-0"
+              >
+                <p className="display text-4xl text-muted-foreground/70">
+                  {String(index + 1).padStart(2, "0")}
+                </p>
+                <h3 className="mt-8 text-2xl font-semibold tracking-tight text-foreground">
+                  {card.title}
+                </h3>
+                <p className="mt-4 text-[1.05rem] leading-relaxed text-muted-foreground">
+                  {card.body}
+                </p>
+              </article>
+            ))}
+          </div>
+        </Frame>
       </section>
 
-      <section className="mt-14 grid gap-4 sm:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>In scope</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2 text-sm text-stone-600">
-              {inclusions.map((item) => (
-                <li key={item}>• {item}</li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader>
-            <CardTitle>Out of scope</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2 text-sm text-stone-600">
-              {outOfScope.map((item) => (
-                <li key={item}>• {item}</li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+      <section id="how" className="scroll-mt-24 border-y border-border bg-[var(--paper-2)] py-20 sm:py-28">
+        <Frame>
+          <p className="kicker">Process</p>
+          <h2 className="display mt-4 text-4xl text-foreground sm:text-5xl">How it works</h2>
+          <ol className="mt-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+            {howItWorks.map((step) => (
+              <li key={step.n} className="border-t border-[var(--rule-strong)] pt-6">
+                <p className="display text-5xl text-foreground/80">{step.n.padStart(2, "0")}</p>
+                <h3 className="mt-6 text-lg font-semibold tracking-tight text-foreground">
+                  {step.title}
+                </h3>
+                <p className="mt-3 text-[0.975rem] leading-relaxed text-muted-foreground">
+                  {step.body}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </Frame>
       </section>
 
-      <div className="mt-12">
-        <Disclaimer />
-      </div>
-
-      <section className="mt-12 rounded-xl border border-stone-200 bg-white px-6 py-10 text-center">
-        <h2 className="text-2xl font-semibold text-stone-900">{product.heroH1}</h2>
-        <p className="mt-2 text-sm text-stone-600">{product.trustRow.join(" · ")}</p>
-        <Button className="mt-6" size="lg" asChild>
-          <Link href="/pay">{product.cta}</Link>
-        </Button>
+      <section id="whats-included" className="scroll-mt-24 bg-[var(--paper)] py-20 sm:py-28">
+        <Frame>
+          <p className="kicker">Specification</p>
+          <h2 className="display mt-4 text-4xl text-foreground sm:text-5xl">What’s included</h2>
+          <div className="mt-14 grid lg:grid-cols-2">
+            <article className="border border-border bg-card p-8 sm:p-12 lg:border-r-0">
+              <h3 className="text-sm font-semibold tracking-[0.16em] text-foreground uppercase">
+                In scope
+              </h3>
+              <ul className="mt-8 space-y-5">
+                {inclusions.map((item) => (
+                  <li key={item} className="flex gap-4 text-[1.02rem] leading-relaxed text-foreground">
+                    <span className="mt-2.5 h-px w-7 shrink-0 bg-primary" aria-hidden />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+            <article className="border border-border bg-[var(--paper-2)] p-8 sm:p-12">
+              <h3 className="text-sm font-semibold tracking-[0.16em] text-foreground uppercase">
+                Out of scope
+              </h3>
+              <ul className="mt-8 space-y-5">
+                {outOfScope.map((item) => (
+                  <li key={item} className="flex gap-4 text-[1.02rem] leading-relaxed text-muted-foreground">
+                    <span className="mt-2.5 h-px w-7 shrink-0 bg-[var(--rule-strong)]" aria-hidden />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          </div>
+        </Frame>
       </section>
 
-      <Separator className="mt-12" />
+      <section className="bg-[var(--paper)] pb-8">
+        <Frame>
+          <Disclaimer />
+        </Frame>
+      </section>
+
+      <section className="border-t border-border bg-[var(--paper-2)] py-20 sm:py-28">
+        <Frame className="max-w-3xl">
+          <h2 className="display text-4xl leading-[1.05] text-foreground sm:text-5xl">
+            {product.heroH1}
+          </h2>
+          <p className="mt-6 text-base text-muted-foreground">
+            {product.trustRow.join(" · ")}
+          </p>
+          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <Button size="lg" asChild>
+              <Link href="/pay">{product.cta}</Link>
+            </Button>
+            <Link
+              href={includedHref}
+              className="text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+            >
+              See what’s included
+            </Link>
+          </div>
+        </Frame>
+      </section>
     </SiteShell>
   );
 }

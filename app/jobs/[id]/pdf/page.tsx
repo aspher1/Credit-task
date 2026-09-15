@@ -26,20 +26,21 @@ export default async function PdfPage({
 
   if (!unlocked) {
     return (
-      <div className="mx-auto max-w-lg px-4 py-16 md:max-w-2xl">
-        <h1 className="text-3xl font-semibold tracking-tight text-stone-900">
+      <div className="mx-auto max-w-lg bg-[var(--paper)] px-5 py-16 md:max-w-2xl">
+        <p className="kicker">PDF deliver</p>
+        <h1 className="display mt-4 text-4xl text-foreground">
           {paywall.headline}
         </h1>
-        <p className="mt-3 text-stone-600">
+        <p className="mt-4 text-muted-foreground">
           {job.paid
             ? "This letter is not ready to print yet."
             : paywall.body}
         </p>
-        <p className="mt-2 text-sm text-muted-foreground">{shortCompliance}</p>
-        <div className="mt-6">
+        <p className="mt-3 text-[0.975rem] leading-relaxed text-foreground">{shortCompliance}</p>
+        <div className="mt-8">
           <Disclaimer />
         </div>
-        <div className="mt-6 flex gap-3">
+        <div className="mt-8 flex gap-3">
           {!job.paid ? (
             <Button asChild>
               <Link href="/pay">{product.cta}</Link>
@@ -54,13 +55,13 @@ export default async function PdfPage({
   }
 
   return (
-    <div className="mx-auto max-w-[8.5in] px-4 py-10">
-      <div className="no-print mb-6 flex flex-wrap items-center justify-between gap-3">
+    <div className="mx-auto max-w-[8.5in] bg-[var(--paper)] px-4 py-10">
+      <div className="no-print mb-8 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
-            US Letter · 1 in margins · Georgia / Times
-          </p>
-          <h1 className="text-2xl font-semibold text-stone-900">{job.address}</h1>
+          <p className="kicker">US Letter · 1 in margins · Georgia / Times</p>
+          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-foreground">
+            {job.address}
+          </h1>
         </div>
         <div className="flex gap-2">
           <PrintButton />

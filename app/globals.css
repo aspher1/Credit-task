@@ -2,25 +2,34 @@
 
 :root {
   color-scheme: light;
-  --background: #fafaf8;
-  --foreground: #44403c;
-  --card: #ffffff;
-  --card-foreground: #44403c;
-  --popover: #ffffff;
-  --popover-foreground: #44403c;
-  --primary: #1d4ed8;
-  --primary-foreground: #ffffff;
-  --secondary: #f5f5f4;
-  --secondary-foreground: #44403c;
-  --muted: #f5f5f4;
-  --muted-foreground: #78716c;
-  --accent: #f5f5f4;
-  --accent-foreground: #1c1917;
-  --destructive: #b91c1c;
-  --border: #e7e5e4;
-  --input: #e7e5e4;
-  --ring: #1d4ed8;
-  --radius: 0.625rem;
+  --ink: #0c1118;
+  --ink-deep: #07090e;
+  --paper: #f4efe6;
+  --paper-2: #ebe4d6;
+  --paper-3: #e3d9c8;
+  --stone-ink: #1c1917;
+  --muted-ink: #57534e;
+  --rule: #d6cec0;
+  --rule-strong: #c4b8a5;
+  --background: var(--paper);
+  --foreground: var(--stone-ink);
+  --card: #fffcf7;
+  --card-foreground: var(--stone-ink);
+  --popover: #fffcf7;
+  --popover-foreground: var(--stone-ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: var(--paper-2);
+  --secondary-foreground: var(--stone-ink);
+  --muted: var(--paper-2);
+  --muted-foreground: var(--muted-ink);
+  --accent: var(--paper-2);
+  --accent-foreground: var(--stone-ink);
+  --destructive: #8f1d1d;
+  --border: var(--rule);
+  --input: var(--rule);
+  --ring: var(--ink);
+  --radius: 0.125rem;
 }
 
 @theme inline {
@@ -43,21 +52,105 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --font-sans: var(--font-geist-sans);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: 0;
+  --radius-md: var(--radius);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-xl: 0.25rem;
 }
 
 html,
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--paper);
+  color: var(--stone-ink);
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
   min-height: 100vh;
+}
+
+::selection {
+  background: #c9d2df;
+  color: var(--ink);
+}
+
+.display {
+  font-weight: 500;
+  letter-spacing: -0.046em;
+  line-height: 0.98;
+}
+
+.kicker {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted-ink);
+}
+
+.hairline {
+  height: 1px;
+  background: var(--rule);
+}
+
+.hero-cinematic {
+  position: relative;
+  isolation: isolate;
+  color: var(--paper);
+  background-color: var(--ink-deep);
+  background-image:
+    radial-gradient(ellipse 70% 55% at 78% 28%, rgba(168, 148, 112, 0.16), transparent 58%),
+    radial-gradient(ellipse 50% 70% at 12% 88%, rgba(28, 48, 78, 0.55), transparent 62%),
+    linear-gradient(180deg, #080b11 0%, #0c1320 46%, #0a1018 100%);
+}
+
+.hero-cinematic::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: min(18vw, 9.5rem) 100%;
+  background-position: 12% 0;
+  mask-image: linear-gradient(90deg, transparent, #000 18%, #000 72%, transparent);
+}
+
+.hero-cinematic::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hero-cinematic > * {
+  position: relative;
+  z-index: 1;
+}
+
+.letter-artifact {
+  position: relative;
+  background: #fffdf8;
+  color: #1c1917;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.35),
+    0 2px 0 rgba(255, 255, 255, 0.08) inset;
 }
 
 .letter-page {
@@ -67,11 +160,11 @@ body {
   margin: 0 auto;
   padding: 1in;
   background: white;
-  color: #1c1917;
+  color: #000000;
   font-family: Georgia, "Times New Roman", Times, serif;
   font-size: 12pt;
   line-height: 1.45;
-  box-shadow: 0 8px 30px rgba(68, 64, 60, 0.08);
+  box-shadow: 0 18px 50px rgba(12, 17, 24, 0.08);
 }
 
 .letter-page p {
@@ -88,7 +181,7 @@ body {
   font-size: 72pt;
   font-weight: 700;
   letter-spacing: 0.18em;
-  color: rgba(120, 113, 108, 0.12);
+  color: rgba(0, 0, 0, 0.08);
   transform: rotate(-28deg);
 }
 
@@ -97,7 +190,7 @@ body {
   padding-top: 0.6em;
   border-top: 1px solid #e7e5e4;
   font-size: 9pt;
-  color: #57534e;
+  color: #44403c;
 }
 
 @page {
@@ -115,6 +208,7 @@ body {
   html,
   body {
     background: white !important;
+    color: #000000 !important;
   }
 
   @page {

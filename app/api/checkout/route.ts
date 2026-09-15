@@ -79,10 +79,7 @@ export async function POST(request: Request) {
   }
 
   return NextResponse.json(
-    {
-      error:
-        "No Stripe test key or Payment Link is configured. Use demo checkout or set STRIPE_SECRET_KEY / STRIPE_PAYMENT_LINK_URL.",
-    },
+    { error: "Checkout is unavailable right now. Please try again shortly." },
     { status: 400 },
   );
 }

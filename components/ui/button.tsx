@@ -4,23 +4,25 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-sm text-sm font-semibold tracking-tight transition-colors disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-ring/40",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-blue-800",
+        default: "bg-primary text-primary-foreground hover:bg-[#1a2433]",
+        inverse:
+          "bg-[var(--paper)] text-[var(--ink)] hover:bg-white",
         outline:
-          "border border-stone-300 bg-transparent text-stone-800 hover:bg-stone-100",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-stone-200",
-        ghost: "text-stone-700 hover:bg-stone-100",
-        link: "text-primary underline-offset-4 hover:underline",
-        destructive: "bg-red-700 text-white hover:bg-red-800",
+          "border border-[var(--rule-strong)] bg-transparent text-foreground hover:bg-[var(--paper-2)]",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-[var(--paper-3)]",
+        ghost: "text-foreground hover:bg-[var(--paper-2)]",
+        link: "text-foreground underline-offset-4 hover:underline",
+        destructive: "bg-destructive text-white hover:bg-[#6f1616]",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-8 rounded-md px-3 text-xs",
-        lg: "h-11 rounded-md px-6",
-        icon: "size-9",
+        default: "h-11 px-5",
+        sm: "h-9 px-3 text-xs",
+        lg: "h-12 px-7 text-[0.9375rem]",
+        icon: "size-10",
       },
     },
     defaultVariants: {

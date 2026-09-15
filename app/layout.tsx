@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="light" style={{ colorScheme: "light" }}>
-      <body className={`${sans.variable} bg-background text-foreground antialiased`}>
+      <body className={`${sans.variable} bg-background font-sans text-foreground antialiased`}>
         {children}
       </body>
     </html>
