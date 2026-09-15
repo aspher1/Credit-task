@@ -25,35 +25,37 @@ export default function PayPage() {
 
   return (
     <SiteShell width="landing">
-      <div className="mx-auto grid max-w-6xl gap-10 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(18rem,0.9fr)] lg:items-start lg:gap-16">
-        <div>
+      <div className="mx-auto grid max-w-7xl gap-8 px-5 py-8 sm:px-8 sm:py-12 lg:grid-cols-12 lg:items-start lg:gap-12 lg:py-14">
+        <div className="lg:col-span-7">
           <p className="kicker">{product.heroBadge}</p>
           <div className="accent-rule mt-5" />
-          <h1 className="font-display mt-6 max-w-xl text-[2.15rem] leading-[1.12] text-stone-900 sm:text-5xl">
+          <h1 className="font-display mt-5 max-w-xl text-[2rem] leading-[1.1] text-stone-900 sm:text-5xl">
             {paywall.headline}
           </h1>
-          <p className="mt-5 max-w-lg text-lg leading-relaxed text-stone-600">
+          <p className="mt-5 max-w-lg text-lg leading-relaxed text-stone-700 sm:text-xl">
             {paywall.body}
           </p>
-          <p className="mt-4 max-w-lg text-sm leading-relaxed text-stone-600">
+          <p className="mt-3 max-w-lg text-base leading-relaxed text-stone-700">
             {shortCompliance}
           </p>
-          <ul className="mt-8 space-y-3">
+        </div>
+
+        <div className="border border-stone-200 bg-white p-6 shadow-sm sm:p-8 lg:sticky lg:top-24 lg:col-span-5">
+          <PayActions checkoutReady={ready} />
+          <p className="mt-5 text-sm leading-relaxed text-stone-600">{paywall.finePrint}</p>
+        </div>
+
+        <div className="lg:col-span-7">
+          <ul className="grid gap-3 sm:grid-cols-3">
             {product.trustRow.map((item) => (
-              <li key={item} className="flex items-center gap-3 text-sm text-stone-700">
-                <span className="h-px w-5 bg-primary" aria-hidden />
+              <li key={item} className="border-t border-stone-300 pt-3 text-sm font-medium text-stone-900">
                 {item}
               </li>
             ))}
           </ul>
-          <div className="mt-10 max-w-lg">
+          <div className="mt-8">
             <Disclaimer />
           </div>
-        </div>
-
-        <div className="panel space-y-5 rounded-lg px-6 py-7 shadow-sm sm:px-8 sm:py-8">
-          <PayActions checkoutReady={ready} />
-          <p className="text-xs leading-relaxed text-stone-500">{paywall.finePrint}</p>
         </div>
       </div>
     </SiteShell>

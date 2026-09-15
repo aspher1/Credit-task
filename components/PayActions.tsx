@@ -40,7 +40,7 @@ export function PayActions({ checkoutReady }: { checkoutReady: boolean }) {
     <div className="space-y-3">
       <Button
         size="lg"
-        className="w-full sm:w-auto"
+        className="w-full"
         disabled={pending}
         onClick={start}
         type="button"

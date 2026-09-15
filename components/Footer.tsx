@@ -3,7 +3,7 @@ import { legalDisclaimer, product } from "@/lib/copy";
 export function Footer() {
   return (
     <footer className="relative z-10 mt-auto border-t border-stone-200">
-      <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+      <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 sm:py-16">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="text-base font-semibold tracking-tight text-stone-900">CreditAsk</p>

@@ -25,7 +25,7 @@ function NavLinks({ onClick }: { onClick?: () => void }) {
 export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0b1220]">
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
         <Link href="/" className="flex flex-col">
           <span className="text-base font-semibold tracking-tight text-[#f7f4ee]">
             CreditAsk

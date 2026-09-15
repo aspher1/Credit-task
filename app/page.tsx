@@ -21,31 +21,31 @@ function Inner({
   className?: string;
 }) {
   return (
-    <div className={cn("mx-auto max-w-6xl px-5 sm:px-8", className)}>{children}</div>
+    <div className={cn("mx-auto max-w-7xl px-5 sm:px-8", className)}>{children}</div>
   );
 }
 
 export default function HomePage() {
   return (
     <SiteShell width="landing">
-      <section className="hero-band relative overflow-x-hidden py-16 sm:py-20 lg:py-28">
-        <Inner className="grid items-center gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-16">
-          <Reveal>
+      <section className="hero-band relative overflow-x-hidden py-14 sm:py-20 lg:min-h-[calc(100svh-4rem)] lg:py-0 lg:flex lg:items-center">
+        <Inner className="grid w-full items-center gap-12 py-4 lg:grid-cols-12 lg:gap-12">
+          <Reveal className="lg:col-span-7">
             <p className="kicker">{product.heroBadge}</p>
-            <div className="accent-rule mt-5" />
-            <h1 className="font-display mt-6 max-w-3xl text-[2.25rem] leading-[1.12] text-[#f7f4ee] sm:text-5xl lg:text-[3.75rem] lg:leading-[1.08]">
+            <div className="accent-rule mt-6" />
+            <h1 className="font-display mt-7 max-w-4xl text-[2.5rem] leading-[1.08] text-[#f7f4ee] sm:text-6xl lg:text-[4.25rem] lg:leading-[1.04]">
               {product.heroH1}
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70 sm:text-lg">
+            <p className="mt-7 max-w-xl text-lg leading-relaxed text-white/80 sm:text-xl">
               {product.heroSub}
             </p>
-            <div className="mt-8">
+            <div className="mt-10">
               <Button size="lg" asChild>
                 <Link href="/pay">{product.cta}</Link>
               </Button>
             </div>
           </Reveal>
-          <Reveal delayMs={80}>
+          <Reveal delayMs={80} className="lg:col-span-5">
             <HeroLetterMock />
           </Reveal>
         </Inner>
@@ -57,7 +57,7 @@ export default function HomePage() {
             {product.trustRow.map((item) => (
               <li
                 key={item}
-                className="border-t border-stone-200 px-0 py-6 text-sm text-stone-800 sm:border-t-0 sm:border-l sm:px-8 sm:py-8 sm:first:border-l-0"
+                className="border-t border-stone-200 px-0 py-7 text-base font-medium text-stone-900 sm:border-t-0 sm:border-l sm:px-10 sm:py-10 sm:text-lg sm:first:border-l-0"
               >
                 {item}
               </li>
@@ -67,15 +67,17 @@ export default function HomePage() {
       </section>
 
       <section className="py-16 sm:py-24">
-        <Inner className="grid gap-4 md:grid-cols-3 md:gap-5">
+        <Inner className="grid gap-px overflow-hidden border border-stone-200 bg-stone-200 md:grid-cols-3">
           {featureCards.map((card, index) => (
-            <Reveal key={card.title} delayMs={index * 40}>
-              <article className="panel rounded-lg p-6 sm:p-8">
-                <p className="text-xs font-semibold tracking-[0.16em] text-primary uppercase">
+            <Reveal key={card.title} delayMs={index * 40} className="h-full">
+              <article className="h-full bg-[#f7f4ee] p-7 sm:p-9">
+                <p className="font-display text-4xl text-primary">
                   {String(index + 1).padStart(2, "0")}
                 </p>
-                <h2 className="font-display mt-5 text-2xl text-stone-900">{card.title}</h2>
-                <p className="mt-3 text-sm leading-relaxed text-stone-600">{card.body}</p>
+                <h2 className="mt-8 text-2xl font-semibold tracking-tight text-stone-900">
+                  {card.title}
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-stone-700">{card.body}</p>
               </article>
             </Reveal>
           ))}
@@ -85,15 +87,17 @@ export default function HomePage() {
       <section id="how" className="scroll-mt-24 border-y border-stone-200 bg-[#f3efe7] py-16 sm:py-24">
         <Inner>
           <Reveal>
-            <h2 className="font-display text-3xl text-stone-900 sm:text-4xl">How it works</h2>
+            <h2 className="font-display text-4xl text-stone-900 sm:text-5xl">How it works</h2>
           </Reveal>
-          <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
             {howItWorks.map((step, index) => (
               <Reveal key={step.n} delayMs={index * 40}>
-                <article>
-                  <p className="font-display text-4xl text-primary">{step.n.padStart(2, "0")}</p>
-                  <h3 className="mt-4 text-base font-semibold text-stone-900">{step.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-stone-600">{step.body}</p>
+                <article className="border-t border-stone-300 pt-6">
+                  <p className="font-display text-5xl leading-none text-primary">
+                    {step.n.padStart(2, "0")}
+                  </p>
+                  <h3 className="mt-6 text-lg font-semibold text-stone-900">{step.title}</h3>
+                  <p className="mt-3 text-base leading-relaxed text-stone-700">{step.body}</p>
                 </article>
               </Reveal>
             ))}
@@ -102,14 +106,14 @@ export default function HomePage() {
       </section>
 
       <section className="py-16 sm:py-24">
-        <Inner className="grid gap-4 lg:grid-cols-2">
+        <Inner className="grid lg:grid-cols-2">
           <Reveal>
-            <article className="panel rounded-lg p-7 sm:p-9">
-              <h2 className="font-display text-3xl text-stone-900">In scope</h2>
-              <ul className="mt-8 space-y-4">
+            <article className="border border-stone-200 bg-white p-8 shadow-sm sm:p-10 lg:border-r-0">
+              <h2 className="font-display text-4xl text-stone-900">In scope</h2>
+              <ul className="mt-8 space-y-5">
                 {inclusions.map((item) => (
-                  <li key={item} className="flex gap-3 text-sm leading-relaxed text-stone-700">
-                    <span className="mt-2 h-px w-5 shrink-0 bg-primary" aria-hidden />
+                  <li key={item} className="flex gap-4 text-base leading-relaxed text-stone-800">
+                    <span className="mt-2.5 h-px w-6 shrink-0 bg-primary" aria-hidden />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -117,12 +121,12 @@ export default function HomePage() {
             </article>
           </Reveal>
           <Reveal delayMs={60}>
-            <article className="rounded-lg border border-stone-200 bg-[#f3efe7] p-7 shadow-sm sm:p-9">
-              <h2 className="font-display text-3xl text-stone-900">Out of scope</h2>
-              <ul className="mt-8 space-y-4">
+            <article className="border border-stone-200 bg-[#f3efe7] p-8 sm:p-10">
+              <h2 className="font-display text-4xl text-stone-900">Out of scope</h2>
+              <ul className="mt-8 space-y-5">
                 {outOfScope.map((item) => (
-                  <li key={item} className="flex gap-3 text-sm leading-relaxed text-stone-600">
-                    <span className="mt-2 h-px w-5 shrink-0 bg-stone-300" aria-hidden />
+                  <li key={item} className="flex gap-4 text-base leading-relaxed text-stone-700">
+                    <span className="mt-2.5 h-px w-6 shrink-0 bg-stone-400" aria-hidden />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -138,13 +142,13 @@ export default function HomePage() {
         </Inner>
       </section>
 
-      <section className="border-t border-stone-200 bg-[#f3efe7] py-16 sm:py-20">
-        <Inner className="max-w-3xl text-center">
+      <section className="border-t border-stone-200 bg-[#f3efe7] py-16 sm:py-24">
+        <Inner className="max-w-3xl">
           <Reveal>
-            <h2 className="font-display text-3xl leading-tight text-stone-900 sm:text-4xl">
+            <h2 className="font-display text-4xl leading-tight text-stone-900 sm:text-5xl">
               {product.heroH1}
             </h2>
-            <p className="mt-4 text-sm text-stone-600">{product.trustRow.join(" · ")}</p>
+            <p className="mt-5 text-base text-stone-700">{product.trustRow.join(" · ")}</p>
             <Button className="mt-8" size="lg" asChild>
               <Link href="/pay">{product.cta}</Link>
             </Button>
@@ -158,20 +162,20 @@ export default function HomePage() {
 function HeroLetterMock() {
   return (
     <div className="relative mx-auto w-full max-w-md overflow-hidden lg:max-w-none">
-      <div className="relative mx-auto aspect-[4/5] max-h-[28rem] w-full max-w-[22rem] sm:max-h-[32rem] sm:max-w-none">
-        <div className="absolute top-[12%] right-[6%] left-[20%] h-[70%] rotate-6 border border-white/15 bg-[#111a2c]" />
-        <div className="absolute inset-x-[10%] inset-y-[6%] overflow-hidden border border-stone-200 bg-white p-7 shadow-md sm:p-9 lg:-rotate-2">
+      <div className="relative mx-auto aspect-[4/5] max-h-[30rem] w-full max-w-[24rem] sm:max-h-[34rem] sm:max-w-none">
+        <div className="absolute top-[12%] right-[4%] left-[18%] h-[72%] rotate-6 border border-white/12 bg-[#111a2c]" />
+        <div className="absolute inset-x-[8%] inset-y-[4%] overflow-hidden border border-stone-200 bg-white p-8 shadow-md sm:p-10 lg:-rotate-2">
           <div className="flex items-center justify-between gap-3">
             <span className="text-[0.7rem] font-semibold tracking-[0.14em] text-stone-500 uppercase">
               {letterAttribution}
             </span>
             <span className="h-px w-10 bg-stone-300" />
           </div>
-          <div className="mt-8 space-y-2.5">
-            <span className="block h-2 w-2/3 bg-stone-200" />
-            <span className="block h-2 w-1/2 bg-stone-100" />
+          <div className="mt-10 space-y-3">
+            <span className="block h-2.5 w-2/3 bg-stone-200" />
+            <span className="block h-2.5 w-1/2 bg-stone-100" />
           </div>
-          <div className="mt-8 space-y-2">
+          <div className="mt-10 space-y-2.5">
             {Array.from({ length: 8 }).map((_, index) => (
               <span
                 key={index}

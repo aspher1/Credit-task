@@ -2,7 +2,7 @@ import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-const alertVariants = cva("relative w-full rounded-lg border px-4 py-3 text-sm", {
+const alertVariants = cva("relative w-full rounded-sm border px-4 py-3 text-sm", {
   variants: {
     variant: {
       default: "border-stone-200 bg-stone-50 text-stone-800",
