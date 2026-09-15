@@ -39,19 +39,16 @@ export function PayActions({
 
   return (
     <div className="space-y-3">
-      {hasStripe ? (
+      {hasStripe || paymentLink ? (
         <Button disabled={!!pending} onClick={() => start("stripe")} type="button">
           {pending === "stripe" ? "Redirecting to Stripe…" : product.cta}
         </Button>
-      ) : paymentLink ? (
-        <Button asChild>
-          <a href={paymentLink}>{product.cta}</a>
-        </Button>
       ) : (
         <p className="text-sm text-muted-foreground">
-          Stripe test keys are not set. Use the demo checkout below, or add{" "}
-          <code>STRIPE_SECRET_KEY</code> / <code>STRIPE_PAYMENT_LINK_URL</code> in
-          <code> .env.local</code>.
+          Stripe test keys are not set. Use the demo checkout below, or add a test{" "}
+          <code>STRIPE_SECRET_KEY</code> (sk_test_) or{" "}
+          <code>STRIPE_PAYMENT_LINK_URL</code> (buy.stripe.com/test_…) in
+          <code> .env.local</code>. See README for creating and linking a Payment Link.
         </p>
       )}
       {allowDemo ? (

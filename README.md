@@ -59,15 +59,64 @@ You can also click through the UI:
 
 ## Stripe (test mode only)
 
-This MVP **refuses live keys**. Configure one of:
+Live charges are **disabled**. `sk_live_` / `pk_live_` keys and live Payment Links (`buy.stripe.com` without `/test`) are rejected at runtime.
 
-| Env | Use |
-|-----|-----|
-| `STRIPE_SECRET_KEY=sk_test_…` | Creates a Checkout Session ($79) |
-| `STRIPE_PAYMENT_LINK_URL` | Redirects to your test Payment Link |
-| neither + `ALLOW_DEMO=true` | Stub checkout marks the job paid locally |
+**Priority:** Checkout Session (`STRIPE_SECRET_KEY=sk_test_…`) → Payment Link (`STRIPE_PAYMENT_LINK_URL`) → stub checkout (`ALLOW_DEMO=true`).
 
-Optional: `STRIPE_WEBHOOK_SECRET` for `POST /api/stripe/webhook` (`checkout.session.completed`). PDF deliver is also gated on `job.paid` even if you skip the webhook and use the success URL.
+### Checkout Session (preferred) — $79
+
+1. In [Stripe Dashboard](https://dashboard.stripe.com), turn on **Test mode**.
+2. **Developers → API keys** → copy the **Secret key** (`sk_test_…`).
+3. Put it in `.env.local`:
+
+```bash
+STRIPE_SECRET_KEY=sk_test_...
+APP_URL=http://localhost:3000
+```
+
+4. Restart `npm run dev`. **Get your letter — $79** on `/pay` creates a Checkout Session for **7900 cents USD**.
+5. Card tests: `4242 4242 4242 4242`, any future expiry, any CVC.
+6. Success redirects to `/pay/success?session_id={CHECKOUT_SESSION_ID}` and marks the local payment paid when Stripe reports `paid`.
+
+Optional webhook (Test mode → **Developers → Webhooks**):
+
+- Endpoint: `https://<your-host>/api/stripe/webhook`
+- Event: `checkout.session.completed`
+- Signing secret → `STRIPE_WEBHOOK_SECRET`
+
+### Payment Link (fallback) — create and link
+
+Use this when you do not want a secret key in the app yet.
+
+1. Dashboard **Test mode** on.
+2. **Product catalog → Add product**
+   - Name: `CreditAsk Inspection Contingency Credit Pack`
+   - One-time price: **$79 USD** (not recurring)
+3. **Payment links → New**
+   - Select that $79 price, quantity 1
+   - **After payment** → Don’t show Stripe’s confirmation page → **Redirect to your website**
+   - URL: `http://localhost:3000/pay/success?session_id={CHECKOUT_SESSION_ID}`  
+     (use your `APP_URL` in deploy)
+4. Copy the link. It **must** look like `https://buy.stripe.com/test_...`
+5. `.env.local`:
+
+```bash
+STRIPE_PAYMENT_LINK_URL=https://buy.stripe.com/test_...
+```
+
+6. Restart the app. If `STRIPE_SECRET_KEY` is also set, Checkout Sessions win; otherwise `/pay` redirects to the Payment Link.
+
+Do **not** paste a live `buy.stripe.com/...` link (no `test_`). The app will refuse it.
+
+### Cursor Stripe connector
+
+The Stripe connector on this Cursor account is **test mode only** until further notice. CreditAsk Checkout reads **`STRIPE_SECRET_KEY` from env** (`sk_test_` only) and charges **7900 cents** — it does not enable live charges and it does not copy keys from the connector.
+
+If you want a Payment Link instead of a secret key in the app, create it in **your** Stripe Dashboard (Test mode) with the steps above and paste the `https://buy.stripe.com/test_...` URL into `STRIPE_PAYMENT_LINK_URL`. Do not create a CreditAsk product in an unrelated connected test account, and do not switch the connector to live mode.
+
+### Stub (no Stripe)
+
+Leave both Stripe env vars empty and keep `ALLOW_DEMO=true`. `/pay` can mark $79 paid locally with no charge.
 
 No live charges. No CRM. No MLS.
 

@@ -10,7 +10,15 @@ export function getStripe(): Stripe | null {
   return client;
 }
 
-export async function createCheckoutSession(paymentId: string): Promise<string> {
+function assertTestMode(livemode: boolean | undefined) {
+  if (livemode) {
+    throw new Error("Live Stripe charges are not allowed. Use test mode (sk_test_ / buy.stripe.com/test_).");
+  }
+}
+
+export async function createCheckoutSession(
+  paymentId: string,
+): Promise<{ url: string; sessionId: string }> {
   const stripe = getStripe();
   if (!stripe) {
     throw new Error("Stripe is not configured (test-mode secret key missing).");
@@ -28,21 +36,24 @@ export async function createCheckoutSession(paymentId: string): Promise<string> 
           product_data: {
             name: "CreditAsk Inspection Contingency Credit Pack",
             description:
-              "Triage + draft credit/repair request letter. Not legal advice. You send the letter yourself.",
+              "Triage + draft credit/repair request letter. Not legal advice. You send the letter yourself. Pay $79 unlocks PDF deliver.",
           },
         },
       },
     ],
-    metadata: { paymentId, product: "creditask" },
+    metadata: { paymentId, product: "creditask", mode: "test" },
     success_url: `${origin}/pay/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/pay`,
   });
+  assertTestMode(session.livemode);
   if (!session.url) throw new Error("Stripe did not return a Checkout URL");
-  return session.url;
+  return { url: session.url, sessionId: session.id };
 }
 
 export async function retrieveCheckoutSession(sessionId: string) {
   const stripe = getStripe();
   if (!stripe) throw new Error("Stripe is not configured");
-  return stripe.checkout.sessions.retrieve(sessionId);
+  const session = await stripe.checkout.sessions.retrieve(sessionId);
+  assertTestMode(session.livemode);
+  return session;
 }

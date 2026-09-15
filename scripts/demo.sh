@@ -82,7 +82,8 @@ echo "==> Printable letter should be unlocked"
 HTML="$(curl -sf "$BASE/jobs/$JOB_ID/pdf")"
 echo "$HTML" | grep -q "Sam Buyer"
 echo "$HTML" | grep -q "456 Demo Street"
-echo "$HTML" | grep -q "Not legal advice"
+echo "$HTML" | grep -q "Prepared with CreditAsk"
+echo "$HTML" | grep -q "Draft for buyer review"
 
 echo
 echo "Demo path OK."

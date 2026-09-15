@@ -32,11 +32,24 @@ export async function POST(request: Request) {
     );
   }
 
+  if (event.livemode) {
+    return NextResponse.json(
+      { error: "Live Stripe events are rejected. Test mode only." },
+      { status: 400 },
+    );
+  }
+
   if (
     event.type === "checkout.session.completed" ||
     event.type === "checkout.session.async_payment_succeeded"
   ) {
     const session = event.data.object as Stripe.Checkout.Session;
+    if (session.livemode) {
+      return NextResponse.json(
+        { error: "Live Checkout Sessions are rejected." },
+        { status: 400 },
+      );
+    }
     const paymentId = session.metadata?.paymentId;
     if (paymentId) {
       const existing = await getPayment(paymentId);

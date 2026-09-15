@@ -32,15 +32,33 @@ export function stripeSecretKey(): string | null {
 export function stripePublishableKey(): string | null {
   const key = read("NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY");
   if (!key) return null;
-  if (key.startsWith("pk_live_")) {
-    throw new Error("Live Stripe publishable keys are not allowed in this MVP.");
+  if (!key.startsWith("pk_test_")) {
+    throw new Error(
+      "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY must be a test-mode key (pk_test_...). Live keys are not allowed.",
+    );
   }
   return key;
 }
 
 export function stripePaymentLinkUrl(): string | null {
   const url = read("STRIPE_PAYMENT_LINK_URL");
-  return url || null;
+  if (!url) return null;
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    throw new Error("STRIPE_PAYMENT_LINK_URL is not a valid URL.");
+  }
+  const testBuyLink =
+    parsed.hostname === "buy.stripe.com" && parsed.pathname.startsWith("/test");
+  const localPlaceholder =
+    parsed.hostname === "localhost" || parsed.hostname === "127.0.0.1";
+  if (!testBuyLink && !localPlaceholder) {
+    throw new Error(
+      "STRIPE_PAYMENT_LINK_URL must be a test-mode Payment Link (https://buy.stripe.com/test_...). Live links are not allowed.",
+    );
+  }
+  return url;
 }
 
 export function stripeWebhookSecret(): string | null {

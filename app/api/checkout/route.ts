@@ -37,22 +37,23 @@ export async function POST(request: Request) {
 
   try {
     if (getStripe()) {
-      const payment = await savePayment({
+      const created = await savePayment({
         id: newId("pay"),
         createdAt: new Date().toISOString(),
         mode: "stripe",
         status: "pending",
         amountCents: PRICE_CENTS,
       });
-      const url = await createCheckoutSession(payment.id);
+      const { url, sessionId } = await createCheckoutSession(created.id);
+      await savePayment({ ...created, stripeSessionId: sessionId });
       const jar = await cookies();
-      jar.set("creditask_payment", payment.id, {
+      jar.set("creditask_payment", created.id, {
         httpOnly: true,
         sameSite: "lax",
         path: "/",
         maxAge: 60 * 60 * 24 * 7,
       });
-      return NextResponse.json({ url, paymentId: payment.id });
+      return NextResponse.json({ url, paymentId: created.id, mode: "checkout" });
     }
   } catch (error) {
     return NextResponse.json(
@@ -61,12 +62,20 @@ export async function POST(request: Request) {
     );
   }
 
-  const paymentLink = stripePaymentLinkUrl();
-  if (paymentLink) {
-    return NextResponse.json({
-      url: paymentLink,
-      note: "Stripe Payment Link placeholder. Configure the link’s success URL to /pay/success.",
-    });
+  try {
+    const paymentLink = stripePaymentLinkUrl();
+    if (paymentLink) {
+      return NextResponse.json({
+        url: paymentLink,
+        mode: "payment_link",
+        note: "Using STRIPE_PAYMENT_LINK_URL. Set the link’s after-payment redirect to /pay/success?session_id={CHECKOUT_SESSION_ID}.",
+      });
+    }
+  } catch (error) {
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Payment Link config error" },
+      { status: 400 },
+    );
   }
 
   return NextResponse.json(
