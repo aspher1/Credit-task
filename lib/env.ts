@@ -40,6 +40,15 @@ export function stripePublishableKey(): string | null {
   return key;
 }
 
+export function stripePriceId(): string | null {
+  const id = read("STRIPE_PRICE_ID");
+  if (!id) return null;
+  if (!id.startsWith("price_")) {
+    throw new Error("STRIPE_PRICE_ID must be a Stripe price id (price_...).");
+  }
+  return id;
+}
+
 export function stripePaymentLinkUrl(): string | null {
   const url = read("STRIPE_PAYMENT_LINK_URL");
   if (!url) return null;

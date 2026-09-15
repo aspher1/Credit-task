@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { PRICE_CENTS, appUrl, stripeSecretKey } from "@/lib/env";
+import { PRICE_CENTS, appUrl, stripePriceId, stripeSecretKey } from "@/lib/env";
 
 let client: Stripe | null | undefined;
 
@@ -24,23 +24,27 @@ export async function createCheckoutSession(
     throw new Error("Stripe is not configured (test-mode secret key missing).");
   }
   const origin = appUrl();
+  const priceId = stripePriceId();
+  const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = priceId
+    ? [{ quantity: 1, price: priceId }]
+    : [
+        {
+          quantity: 1,
+          price_data: {
+            currency: "usd",
+            unit_amount: PRICE_CENTS,
+            product_data: {
+              name: "CreditAsk Inspection Contingency Credit Pack",
+              description:
+                "Triage + draft credit/repair request letter. Not legal advice. You send the letter yourself. Pay $79 unlocks PDF deliver.",
+            },
+          },
+        },
+      ];
   const session = await stripe.checkout.sessions.create({
     mode: "payment",
     customer_creation: "always",
-    line_items: [
-      {
-        quantity: 1,
-        price_data: {
-          currency: "usd",
-          unit_amount: PRICE_CENTS,
-          product_data: {
-            name: "CreditAsk Inspection Contingency Credit Pack",
-            description:
-              "Triage + draft credit/repair request letter. Not legal advice. You send the letter yourself. Pay $79 unlocks PDF deliver.",
-          },
-        },
-      },
-    ],
+    line_items: lineItems,
     metadata: { paymentId, product: "creditask", mode: "test" },
     success_url: `${origin}/pay/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${origin}/pay`,

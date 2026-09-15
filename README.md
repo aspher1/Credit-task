@@ -84,9 +84,31 @@ Optional webhook (Test mode → **Developers → Webhooks**):
 - Event: `checkout.session.completed`
 - Signing secret → `STRIPE_WEBHOOK_SECRET`
 
-### Payment Link (fallback) — create and link
+### Payment Link (fallback) — CreditAsk test link
 
-Use this when you do not want a secret key in the app yet.
+Use this when `STRIPE_SECRET_KEY` is **not** set. If `sk_test_…` is present, **Checkout Sessions win** and this URL is not used.
+
+**Ready test Payment Link (do not use live mode):**
+
+```bash
+STRIPE_PAYMENT_LINK_URL=https://buy.stripe.com/test_7sYfZigF9cyO6iseuO6kg00
+```
+
+| | Test ids |
+|---|---|
+| Payment Link | `plink_1UG2W3LRfzVmxUBhldUMkNq5` |
+| Price | `price_1UG2VzLRfzVmxUBhrC0lBeZy` — **$79 USD one-time** |
+| Product | `prod_VGZfwuTY9wNDi7` |
+
+After-payment redirect is already set to:
+
+`http://localhost:3000/pay/success?session_id={CHECKOUT_SESSION_ID}`
+
+Copy `.env.example` to `.env.local` to pick this up. Live `buy.stripe.com/…` links (no `test_`) are rejected.
+
+Optional: `STRIPE_PRICE_ID=price_1UG2VzLRfzVmxUBhrC0lBeZy` so Checkout Sessions (when `sk_test_` is set) use the same $79 catalog price. The price id must belong to the **same test account** as `STRIPE_SECRET_KEY`; otherwise leave `STRIPE_PRICE_ID` empty and Checkout uses `price_data` at 7900 cents.
+
+### Recreate a Payment Link (if you need a new one)
 
 1. Dashboard **Test mode** on.
 2. **Product catalog → Add product**
@@ -98,21 +120,13 @@ Use this when you do not want a secret key in the app yet.
    - URL: `http://localhost:3000/pay/success?session_id={CHECKOUT_SESSION_ID}`  
      (use your `APP_URL` in deploy)
 4. Copy the link. It **must** look like `https://buy.stripe.com/test_...`
-5. `.env.local`:
+5. Set `STRIPE_PAYMENT_LINK_URL` in `.env.local` and restart.
 
-```bash
-STRIPE_PAYMENT_LINK_URL=https://buy.stripe.com/test_...
-```
-
-6. Restart the app. If `STRIPE_SECRET_KEY` is also set, Checkout Sessions win; otherwise `/pay` redirects to the Payment Link.
-
-Do **not** paste a live `buy.stripe.com/...` link (no `test_`). The app will refuse it.
+Do **not** paste a live `buy.stripe.com/...` link (no `test_`). The app will refuse it. Do not enable live mode.
 
 ### Cursor Stripe connector
 
-The Stripe connector on this Cursor account is **test mode only** until further notice. CreditAsk Checkout reads **`STRIPE_SECRET_KEY` from env** (`sk_test_` only) and charges **7900 cents** — it does not enable live charges and it does not copy keys from the connector.
-
-If you want a Payment Link instead of a secret key in the app, create it in **your** Stripe Dashboard (Test mode) with the steps above and paste the `https://buy.stripe.com/test_...` URL into `STRIPE_PAYMENT_LINK_URL`. Do not create a CreditAsk product in an unrelated connected test account, and do not switch the connector to live mode.
+The Stripe connector on this Cursor account is **test mode only**. CreditAsk prefers **Checkout Sessions** from `STRIPE_SECRET_KEY` (`sk_test_` only, **$79 / 7900 cents**). The test Payment Link above is the fallback when no secret key is set. Live charges stay disabled.
 
 ### Stub (no Stripe)
 
