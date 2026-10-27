@@ -1,6 +1,8 @@
 <!-- portfolio-intro:start -->
 # CreditAsk
 
+[![CI status](https://github.com/aspher1/Credit-task/actions/workflows/ci.yml/badge.svg)](https://github.com/aspher1/Credit-task/actions/workflows/ci.yml)
+
 **A full-stack prototype for turning home inspection findings into a human-reviewed repair or seller-credit request draft.**
 
 CreditAsk takes a buyer's inspection PDF or photos, collects priorities, triages issues, drafts a letter, and gates delivery behind payment status and an administrative approval step.
