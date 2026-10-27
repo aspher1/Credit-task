@@ -6,6 +6,8 @@ cd "$ROOT"
 
 BASE="${1:-${APP_URL:-http://localhost:3000}}"
 BASE="${BASE%/}"
+COOKIE_JAR="$(mktemp)"
+trap 'rm -f "$COOKIE_JAR"' EXIT
 
 if [ ! -f .env.local ]; then
   echo "Creating .env.local from .env.example"
@@ -35,7 +37,7 @@ curl -sf -X POST "$BASE/api/demo/setup" | tee /tmp/creditask-demo-setup.json
 echo
 
 echo '==> Demo $79 payment (stub, no Stripe charge)'
-PAY_JSON="$(curl -sf -X POST "$BASE/api/checkout" \
+PAY_JSON="$(curl -sf -c "$COOKIE_JAR" -X POST "$BASE/api/checkout" \
   -H "Content-Type: application/json" \
   -d '{"mode":"demo"}')"
 echo "$PAY_JSON"
@@ -49,6 +51,8 @@ fi
 
 echo "==> Intake with sample inspection PDF"
 INTAKE_JSON="$(curl -sf -X POST "$BASE/api/intake" \
+  -b "$COOKIE_JAR" \
+  -c "$COOKIE_JAR" \
   -F "address=456 Demo Street, Springfield, IL 62704" \
   -F "buyerName=Sam Buyer" \
   -F "askTargetRole=seller" \
@@ -65,11 +69,17 @@ if [ -z "$JOB_ID" ]; then
 fi
 
 echo "==> Job after triage/draft"
-curl -sf "$BASE/api/jobs/$JOB_ID"
+curl -sf -b "$COOKIE_JAR" "$BASE/api/jobs/$JOB_ID"
 echo
 
+echo "==> Job data must be private without the buyer cookie"
+if [ "$(curl -s -o /dev/null -w '%{http_code}' "$BASE/api/jobs/$JOB_ID")" != "404" ]; then
+  echo "Job data was accessible without the owner cookie"
+  exit 1
+fi
+
 echo "==> PDF must stay locked until approve"
-LOCKED="$(curl -sf "$BASE/jobs/$JOB_ID/pdf")"
+LOCKED="$(curl -sf -b "$COOKIE_JAR" "$BASE/jobs/$JOB_ID/pdf")"
 if echo "$LOCKED" | grep -q "Sam Buyer"; then
   echo "PDF unlocked before approve"
   exit 1
@@ -87,7 +97,7 @@ curl -sf -X POST "$BASE/api/demo/advance" \
   -d "{\"jobId\":\"$JOB_ID\",\"action\":\"deliver\"}" >/dev/null
 
 echo "==> Printable letter should be unlocked"
-HTML="$(curl -sf "$BASE/jobs/$JOB_ID/pdf")"
+HTML="$(curl -sf -b "$COOKIE_JAR" "$BASE/jobs/$JOB_ID/pdf")"
 echo "$HTML" | grep -q "Sam Buyer"
 echo "$HTML" | grep -q "456 Demo Street"
 echo "$HTML" | grep -q "Prepared with CreditAsk"

@@ -4,6 +4,7 @@ import { saveUpload } from "@/lib/files";
 import { advanceToDraft } from "@/lib/pipeline";
 import { attachPaymentToJob, getPayment, newId, saveJob } from "@/lib/store";
 import { writeExamplePdf } from "@/lib/seed";
+import { issueJobAccess, jobAccessCookieName } from "@/lib/job-access";
 import {
   ASK_INTENTS,
   ASK_TARGET_ROLES,
@@ -34,7 +35,11 @@ export async function POST(request: Request) {
   const deadline = String(form.get("deadline") ?? "").trim();
   const paymentIdFromForm = String(form.get("paymentId") ?? "").trim();
   const jar = await cookies();
-  const paymentId = paymentIdFromForm || jar.get("creditask_payment")?.value;
+  // A submitted ID alone is not proof that this buyer owns a payment record.
+  const paymentId = jar.get("creditask_payment")?.value;
+  if (paymentIdFromForm && paymentIdFromForm !== paymentId) {
+    return NextResponse.json({ error: "Payment session mismatch. Start from checkout." }, { status: 400 });
+  }
 
   if (!address || !buyerName || !askTargetName) {
     return NextResponse.json(
@@ -59,6 +64,7 @@ export async function POST(request: Request) {
   }
 
   const id = newId("job");
+  const jobAccess = issueJobAccess();
   const now = new Date().toISOString();
   let pdfFilename: string | undefined;
   const photoFilenames: string[] = [];
@@ -79,6 +85,7 @@ export async function POST(request: Request) {
 
   let job: Job = {
     id,
+    accessTokenHash: jobAccess.hash,
     createdAt: now,
     updatedAt: now,
     status: "intake_received",
@@ -101,6 +108,14 @@ export async function POST(request: Request) {
   job = await advanceToDraft(job);
   job = await saveJob(job);
   if (payment) await attachPaymentToJob(payment.id, job.id);
+
+  jar.set(jobAccessCookieName(id), jobAccess.token, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production" && process.env.APP_URL?.startsWith("https://") === true,
+    path: "/",
+    maxAge: 60 * 60 * 24 * 30,
+  });
 
   return NextResponse.json({ id: job.id, status: job.status });
 }

@@ -7,14 +7,28 @@ export function appUrl(): string {
 }
 
 export function allowDemo(): boolean {
-  const value = read("ALLOW_DEMO", "true").toLowerCase();
-  return value !== "false" && value !== "0";
+  // Never expose synthetic payment/approval shortcuts by default or on Vercel.
+  if (process.env.VERCEL) return false;
+  if (read("ALLOW_DEMO").toLowerCase() !== "true") return false;
+  try {
+    const url = new URL(appUrl());
+    return url.protocol === "http:" && (url.hostname === "localhost" || url.hostname === "127.0.0.1");
+  } catch {
+    return false;
+  }
 }
 
 export function adminCredentials() {
+  const demo = allowDemo();
+  const email = read("ADMIN_EMAIL") || (demo ? "admin@creditask.local" : "");
+  const password = read("ADMIN_PASSWORD") || (demo ? "changeme" : "");
+  // Old copied example configurations must not re-enable public defaults.
+  if (!demo && email === "admin@creditask.local" && password === "changeme") {
+    return { email: "", password: "" };
+  }
   return {
-    email: read("ADMIN_EMAIL", "admin@creditask.local"),
-    password: read("ADMIN_PASSWORD", "changeme"),
+    email,
+    password,
   };
 }
 

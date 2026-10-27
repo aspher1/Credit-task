@@ -16,7 +16,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const expected = adminCredentials();
         const email = String(credentials?.email ?? "");
         const password = String(credentials?.password ?? "");
-        if (email === expected.email && password === expected.password) {
+        if (expected.email && expected.password && email === expected.email && password === expected.password) {
           return {
             id: "admin",
             name: "CreditAsk Admin",

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { paywall, product, shortCompliance } from "@/lib/copy";
 import { letterIsUnapprovedDraft } from "@/lib/pdf-gate";
 import { getJob } from "@/lib/store";
+import { canReadJob } from "@/lib/job-authorization";
 
 export const dynamic = "force-dynamic";
 
@@ -18,6 +19,7 @@ export default async function PdfPage({
   const { id } = await params;
   const job = await getJob(id);
   if (!job) notFound();
+  if (!(await canReadJob(job))) notFound();
   const letter = job.letterFinal || job.letterDraft;
   const unlocked =
     !!letter &&

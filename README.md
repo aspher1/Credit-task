@@ -5,7 +5,7 @@
 
 **A full-stack prototype for turning home inspection findings into a human-reviewed repair or seller-credit request draft.**
 
-CreditAsk takes a buyer's inspection PDF or photos, collects priorities, triages issues, drafts a letter, and gates delivery behind payment status and an administrative approval step.
+CreditAsk accepts a buyer's inspection PDF or photos, collects priorities, drafts a reviewable repair or credit letter, and gates printable delivery behind payment status and administrative approval. **Current triage uses intake fields and upload filenames only. It does not read or analyze inspection PDF or photo contents.**
 
 **Tech:** Next.js App Router, React, TypeScript, Auth.js, Stripe **test mode**, file uploads, optional LLM-assisted triage.
 
@@ -19,7 +19,7 @@ CreditAsk takes a buyer's inspection PDF or photos, collects priorities, triages
 
 **Project status:** MVP, not a live paid service. The $79 price and ~24-hour turnaround are proposed product terms, not evidence of paying customers or fulfilled orders. No seller outreach or legal representation is performed. Live Stripe charges are disabled.
 
-**Security caveat:** Development example credentials must never be used on a public deployment. Ephemeral `/tmp` storage is not durable private file storage. A deployed service would require production authentication, secure persistent storage and independent review.
+**Security caveat:** Development example credentials must never be used on a public deployment. Buyer job pages and API responses require a per-job private cookie or an admin session; the explicitly enabled local synthetic example remains public for demo purposes. Ephemeral `/tmp` storage is not durable private file storage. A deployed service would require production authentication, secure persistent storage and independent review.
 
 ---
 
@@ -27,7 +27,7 @@ CreditAsk takes a buyer's inspection PDF or photos, collects priorities, triages
 
 ## Detailed demo and implementation
 
-Home buyers upload a home inspection PDF (or photos) plus priorities. CreditAsk triages findings and delivers a **ready-to-send credit/repair request letter**.
+Home buyers upload a home inspection PDF (or photos) plus priorities. CreditAsk produces a **draft credit/repair request letter for human review**. The uploaded file bytes are stored, but the current triage engine does not extract findings from them. Reviewers must read the actual inspection before using the letter.
 
 - **Price:** $79
 - **Marketing SLA:** ~24 hours
@@ -46,7 +46,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-Default admin login (override in `.env.local`):
+Sample admin login, available only with explicit `ALLOW_DEMO=true` on localhost (configure your own credentials otherwise):
 
 - Email: `admin@creditask.local`
 - Password: `changeme`
@@ -65,7 +65,7 @@ Terminal 2:
 npm run demo
 ```
 
-The demo script:
+The demo script (explicit local `ALLOW_DEMO=true` only):
 
 1. Hits `/api/health` until the app is up
 2. Seeds the labeled **example** job (`123 Example Lane…`)
@@ -73,7 +73,7 @@ The demo script:
 4. Submits intake with `scripts/fixtures/sample-inspection.pdf`
 5. Runs triage + draft letter (LLM if a key is set, otherwise stub)
 6. Approves and marks delivered via the demo helper
-7. Checks that the printable letter page is unlocked
+7. Checks that the printable letter page is unlocked for its owner cookie, while direct unauthenticated job API access is rejected
 
 You can also click through the UI:
 
@@ -133,6 +133,8 @@ After-payment redirect is already set to:
 
 Copy `.env.example` to `.env.local` to pick this up. Live `buy.stripe.com/…` links (no `test_`) are rejected.
 
+**Payment Link limitation:** Without a configured `sk_test_...` Stripe key, the app currently cannot retrieve the redirected Checkout Session to reconcile payment. A Payment Link redirect alone therefore cannot unlock the PDF automatically. The end-to-end demo uses an explicitly labeled local stub payment instead.
+
 Optional: `STRIPE_PRICE_ID=price_1UG2VzLRfzVmxUBhrC0lBeZy` so Checkout Sessions (when `sk_test_` is set) use the same $79 catalog price. The price id must belong to the **same test account** as `STRIPE_SECRET_KEY`; otherwise leave `STRIPE_PRICE_ID` empty and Checkout uses `price_data` at 7900 cents.
 
 ### Recreate a Payment Link (if you need a new one)
@@ -163,9 +165,9 @@ No live charges. No CRM. No MLS.
 
 ## LLM triage
 
-If `XAI_API_KEY` or `OPENAI_API_KEY` is present, intake calls that API for triage JSON, then fills the letter template.
+If `XAI_API_KEY` or `OPENAI_API_KEY` is present, intake sends the buyer-entered fields and upload **filenames** to that API for triage JSON, then fills the letter template. **It does not send or parse PDF pages, OCR results, or photo pixels.**
 
-If no key is set (or the call fails), a conservative **stub** fills the same template so the demo works offline. Stub mode does **not** invent dollar amounts.
+If no key is set (or the call fails), a conservative **stub** fills the same template so the demo works offline. Stub mode does **not** invent dollar amounts and explicitly marks its sample issues as unverified.
 
 ## Data & uploads
 
@@ -176,7 +178,7 @@ Runtime files (gitignored locally):
 
 On Vercel (`VERCEL=1`), the app filesystem is read-only, so the same files go under `/tmp/creditask` (ephemeral per instance; enough for MVP smoke).
 
-Admin can open attachments from the approve page (`/api/files/...`, session required).
+Admin can open attachments from the approve page (`/api/files/...`, session required). Buyers receive a private, HttpOnly per-job access cookie at intake; an admin session can also open job details. Losing the browser cookie currently requires an administrator-assisted recovery process.
 
 ## Routes
 

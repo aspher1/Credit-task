@@ -68,6 +68,8 @@ export type PaymentRecord = {
 
 export type Job = {
   id: string;
+  /** Hash of the buyer's private access cookie, never exposed in GET responses. */
+  accessTokenHash?: string;
   createdAt: string;
   updatedAt: string;
   status: JobStatus;

@@ -50,6 +50,8 @@ export async function POST(request: Request) {
         { status: 400 },
       );
     }
+    // Completing checkout can precede asynchronous payment settlement.
+    if (session.payment_status !== "paid") return NextResponse.json({ received: true });
     const paymentId = session.metadata?.paymentId;
     if (paymentId) {
       const existing = await getPayment(paymentId);

@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { approveSuccess, paywall, product } from "@/lib/copy";
 import { letterIsUnapprovedDraft } from "@/lib/pdf-gate";
 import { getJob } from "@/lib/store";
+import { canReadJob } from "@/lib/job-authorization";
 import { intentLabel, roleLabel } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
@@ -24,6 +25,7 @@ export default async function JobPage({
   const { id } = await params;
   const job = await getJob(id);
   if (!job) notFound();
+  if (!(await canReadJob(job))) notFound();
   const session = await auth();
   const isAdmin = !!session?.user;
   const letter = job.letterFinal || job.letterDraft;

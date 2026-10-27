@@ -30,7 +30,7 @@ export default async function PaySuccessPage({
   if (params.session_id && getStripe()) {
     try {
       const session = await retrieveCheckoutSession(params.session_id);
-      paid = session.payment_status === "paid" || session.status === "complete";
+      paid = session.payment_status === "paid";
       const metaId = session.metadata?.paymentId;
       const existing =
         (metaId ? await getPayment(metaId) : null) ||
