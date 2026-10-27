@@ -1,3 +1,28 @@
+<!-- portfolio-intro:start -->
+# CreditAsk
+
+**A full-stack prototype for turning home inspection findings into a human-reviewed repair or seller-credit request draft.**
+
+CreditAsk takes a buyer's inspection PDF or photos, collects priorities, triages issues, drafts a letter, and gates delivery behind payment status and an administrative approval step.
+
+**Tech:** Next.js App Router, React, TypeScript, Auth.js, Stripe **test mode**, file uploads, optional LLM-assisted triage.
+
+**What this demonstrates**
+- Multi-step intake and private upload handling in the local development setup.
+- Draft generation with an offline fallback and a mandatory human review step.
+- Clearly labeled demo payments and Stripe test Checkout integrations.
+- An administrative flow for review, revisions and printable output.
+
+**Try it:** Follow the local setup and `npm run demo` instructions below. [Demo implementation](scripts/demo.sh) · [Tests](tests/)
+
+**Project status:** MVP, not a live paid service. The $79 price and ~24-hour turnaround are proposed product terms, not evidence of paying customers or fulfilled orders. No seller outreach or legal representation is performed. Live Stripe charges are disabled.
+
+**Security caveat:** Development example credentials must never be used on a public deployment. Ephemeral `/tmp` storage is not durable private file storage. A deployed service would require production authentication, secure persistent storage and independent review.
+
+---
+
+<!-- portfolio-intro:end -->
+
 # CreditAsk — Inspection Contingency Credit Pack
 
 Home buyers upload a home inspection PDF (or photos) plus priorities. CreditAsk triages findings and delivers a **ready-to-send credit/repair request letter**.
