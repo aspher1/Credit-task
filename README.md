@@ -25,7 +25,7 @@ CreditAsk takes a buyer's inspection PDF or photos, collects priorities, triages
 
 <!-- portfolio-intro:end -->
 
-# CreditAsk — Inspection Contingency Credit Pack
+## Detailed demo and implementation
 
 Home buyers upload a home inspection PDF (or photos) plus priorities. CreditAsk triages findings and delivers a **ready-to-send credit/repair request letter**.
 
